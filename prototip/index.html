@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototip: jutarnji izvještaj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0E3151; --ink:#1F2F3E; --muted:#6B7C8C; --line:#E6EAEE; --bg:#F5F7F9; --paper:#fff; --accent:#0076B5; --green:#A9CF3A;
+          --ok:#3A7A16; --okbg:#EEF6E2; --bad:#BF4428; --badbg:#FDEEEA; --warn:#A86D12; --warnbg:#FDF4E3; --opp:#0076B5; --oppbg:#E8F3FA; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif; color:var(--ink); background:var(--bg); font-size:14px; line-height:1.5; font-weight:400; }
+  button { font:inherit; color:inherit; cursor:pointer; }
+  button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  h1, h2, h3 { font-weight:600; }
+  .demo-bar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px 20px; background:#FFFBEA; border-bottom:1px solid #F0E2B0; font-size:12px; color:#6B5A1E; }
+  .demo-bar button { border:1px solid #E5D291; background:#fff; border-radius:999px; padding:3px 10px; font-size:12px; }
+  .demo-bar button[aria-pressed="true"] { background:#6B5A1E; color:#fff; border-color:#6B5A1E; }
+  body.embed .demo-bar { display:none; }
+  body.static button, body.static .day { pointer-events:none; }
+  body.static [data-note] { transition:box-shadow .15s; }
+  body.static .noted { box-shadow:0 0 0 3px rgba(0,118,181,.55); border-radius:12px; }
+  .app { display:grid; grid-template-columns:56px minmax(0,1fr); min-height:100vh; }
+  .side { background:var(--navy); display:flex; flex-direction:column; align-items:center; gap:18px; padding-top:18px; }
+  .side i { display:block; width:22px; height:22px; border-radius:6px; background:#2A4B6B; }
+  .side i.on { background:var(--green); }
+  main { padding:24px clamp(16px,3vw,40px) 48px; width:100%; max-width:1480px; align-self:start; }
+
+  .top { display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+  .hello h1 { font-size:22px; margin:0; letter-spacing:-.01em; }
+  .hello p { margin:2px 0 0; color:var(--muted); font-size:13px; }
+  .seg { display:inline-flex; background:var(--paper); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .seg button { border:0; background:transparent; padding:7px 14px; font-size:13px; font-weight:500; color:var(--muted); }
+  .seg button[aria-pressed="true"] { background:var(--navy); color:#fff; }
+  .seg-lbl { font-size:12px; color:var(--muted); margin-right:6px; }
+
+  .widgets { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-bottom:28px; }
+  .w { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:18px 20px; }
+  .w .lbl { font-size:13px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .st { width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-size:12px; font-weight:700; color:#fff; flex:none; }
+  .st.ok { background:var(--ok); } .st.bad { background:var(--bad); } .st.warn { background:var(--warn); }
+  .w.bad { border-color:#EFC3B8; } .w.warn { border-color:#EBD3A6; }
+  .w .v { font-size:30px; font-weight:600; letter-spacing:-.02em; margin:8px 0 0; line-height:1.15; }
+  .w .v small { font-size:14px; color:var(--muted); font-weight:500; letter-spacing:0; margin-left:4px; }
+  .w .verdict { display:inline-block; margin-top:8px; font-size:13px; font-weight:600; padding:2px 10px; border-radius:999px; }
+  .verdict.good { background:var(--okbg); color:var(--ok); } .verdict.ok { background:#EEF1F4; color:var(--muted); } .verdict.bad { background:var(--badbg); color:var(--bad); } .verdict.warn { background:var(--warnbg); color:var(--warn); }
+  .w .x { font-size:13px; color:var(--muted); margin-top:10px; padding-top:10px; border-top:1px solid var(--line); }
+
+  .sec { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:0 0 10px; }
+  .sec h2 { font-size:16px; margin:0; }
+  .sec .meta { font-size:13px; color:var(--muted); }
+  .count { font-size:12px; font-weight:600; background:var(--ink); color:#fff; border-radius:999px; padding:1px 8px; }
+  .attn { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; margin-bottom:30px; }
+  .item { background:var(--paper); border:1px solid var(--line); border-left:3px solid var(--c); border-radius:4px 12px 12px 4px; padding:16px 18px; display:flex; flex-direction:column; gap:8px; }
+  .item .cons { font-size:13px; color:var(--ink); background:#F4F6F8; border-radius:8px; padding:8px 10px; margin:0; }
+  .item .cons b { font-weight:600; }
+  .item .est { font-size:11px; color:var(--muted); }
+  .more-items { grid-column:1 / -1; justify-self:start; }
+  .tag { align-self:flex-start; font-size:12px; font-weight:600; color:var(--c); display:inline-flex; align-items:center; gap:6px; }
+  .tag::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--c); }
+  .item h3 { font-size:15px; margin:0; }
+  .item .fact { margin:0; font-size:14px; }
+  .item .fact b { font-weight:600; }
+  .item dl { margin:0; display:grid; gap:8px; }
+  .item dt { font-size:12px; color:var(--muted); }
+  .item dd { margin:1px 0 0; font-size:13px; }
+  .acts { display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:4px; }
+  .btn { border:1px solid var(--line); background:var(--paper); border-radius:8px; padding:6px 12px; font-size:13px; font-weight:500; color:var(--accent); }
+  .btn.primary { background:var(--navy); border-color:var(--navy); color:#fff; }
+  .allok { display:none; align-items:center; gap:14px; background:var(--okbg); border:1px solid #D6E9C0; border-radius:14px; padding:16px 20px; margin-bottom:30px; }
+  .allok .tick { width:34px; height:34px; border-radius:50%; background:var(--ok); color:#fff; display:grid; place-items:center; font-weight:700; flex:none; }
+  .allok h3 { margin:0; font-size:15px; color:var(--ok); }
+  .allok p { margin:0; font-size:13px; color:var(--muted); }
+
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:12px; }
+  .kpi { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .kpi .k { font-size:12px; color:var(--muted); }
+  .kpi .v { font-size:22px; font-weight:600; margin:4px 0 2px; letter-spacing:-.01em; }
+  .kpi .d { font-size:12px; color:var(--muted); }
+  .kpi .d b { font-weight:600; color:var(--ink); }
+  .kpi .d b.up, .kpi .d b.down { padding:1px 7px; border-radius:999px; }
+  .kpi .d b.up { color:var(--ok); background:var(--okbg); } .kpi .d b.down { color:var(--bad); background:var(--badbg); }
+  .sec .seg { margin-left:auto; }
+  .kpi .s { font-size:11px; color:var(--muted); margin-top:4px; }
+  .books { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:28px; }
+  .book { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; align-items:baseline; }
+  .book span { font-size:13px; color:var(--muted); }
+  .book strong { font-size:18px; font-weight:600; }
+  .book em { font-style:normal; font-size:12px; color:var(--muted); margin-left:6px; }
+
+  .fc { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:12px; }
+  .card { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .fc-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:6px; }
+  .fc-head h3 { font-size:14px; margin:0; }
+  .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin:0 0 10px; }
+  .legend span::before { content:""; display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:-1px; background:var(--c); }
+  .legend .lyk::before { height:2px; vertical-align:3px; }
+  .chart { display:flex; align-items:flex-end; gap:4px; height:170px; border-bottom:1px solid var(--line); }
+  .day { flex:1; height:100%; position:relative; display:flex; align-items:flex-end; background:none; border:0; padding:0; border-radius:3px 3px 0 0; }
+  .day:hover .b { filter:brightness(.92); }
+  .b { width:100%; background:#C9D3DC; border-radius:3px 3px 0 0; }
+  .b.low { background:#E4907A; } .b.opp { background:var(--opp); } .b.high { background:#B5D69C; }
+  .day[aria-pressed="true"] .b { outline:2px solid var(--navy); outline-offset:1px; }
+  .lyl { position:absolute; left:-1px; right:-1px; height:2px; background:var(--ink); opacity:.5; pointer-events:none; }
+  .days { display:flex; gap:4px; margin-top:4px; }
+  .days span { flex:1; text-align:center; font-size:10px; color:var(--muted); line-height:1.2; overflow:hidden; }
+  .days b { display:block; color:var(--ink); font-weight:600; font-size:10px; }
+  .detail h3 { font-size:14px; margin:0 0 2px; }
+  .detail .dsub { font-size:12px; color:var(--muted); margin:0 0 10px; }
+  .dr { display:flex; justify-content:space-between; align-items:baseline; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px; }
+  .dr:last-of-type { border-bottom:0; }
+  .dr span { color:var(--muted); }
+  .dr b { font-weight:600; text-align:right; }
+  .dr b small { display:block; font-weight:400; font-size:11px; color:var(--muted); }
+  .dstatus { margin-top:10px; font-size:12px; font-weight:600; padding:6px 10px; border-radius:8px; }
+  .foot { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:16px; font-size:12px; color:var(--muted); align-items:center; }
+  .toast { position:fixed; left:50%; bottom:20px; transform:translateX(-50%); background:var(--navy); color:#fff; font-size:13px; padding:9px 14px; border-radius:8px; opacity:0; transition:opacity .2s; pointer-events:none; max-width:90vw; z-index:5; }
+  .toast.show { opacity:1; }
+  .fc > .card:first-child { display:flex; flex-direction:column; }
+  .fc .chart { flex:1; min-height:170px; height:auto; }
+  @media (max-width:900px) { .fc { grid-template-columns:minmax(0,1fr); } }
+  @media (max-width:700px) { .app { grid-template-columns:minmax(0,1fr); } .side { display:none; } .attn { grid-template-columns:minmax(0,1fr); } }
+</style>
+</head>
+<body>
+<div class="demo-bar" role="group" aria-label="Scenarij prototipa">
+  <span>Prototip s izmišljenim podacima. Scenarij:</span>
+  <button data-scn="bad">Loš dan</button><button data-scn="normal" aria-pressed="true">Uobičajen dan</button><button data-scn="good">Sve u redu</button>
+</div>
+<div class="app">
+  <nav class="side" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></nav>
+  <main>
+    <div class="top" data-note="hdr">
+      <div class="hello"><h1>Dobro jutro, Marija</h1><p>Jutarnji izvještaj, utorak 29. rujna, stanje nakon zatvaranja dana</p></div>
+      <button class="btn" data-go="detaljni izvještaji po danima, segmentima i odjelima">Detaljni izvještaji</button>
+
+    </div>
+
+    <section class="widgets" id="widgets" aria-label="Glavni pregled"></section>
+
+    <div class="sec" id="attnHead"><h2>Traži tvoju pažnju</h2><span class="count" id="count"></span><span class="meta">poredano: danas, rizik za prihod, prilika</span></div>
+    <div class="attn" id="attn" data-note="attn"></div>
+    <div class="allok" id="allok" data-note="attn"><span class="tick" aria-hidden="true">✓</span><div><h3>Sve je u redu</h3><p>Nijedna brojka ne odstupa znatno od prošle godine. Nema ničeg što traži tvoju reakciju.</p></div></div>
+
+    <div class="sec"><h2>Brojke</h2><span class="meta" id="kpiMeta"></span><div class="seg" role="group" aria-label="Razdoblje"><button data-per="day" aria-pressed="true">Jučer</button><button data-per="week">Zadnjih 7 dana</button><button data-per="month">Mjesec do danas</button></div></div>
+    <div class="kpis" id="kpis" data-note="kpis"></div>
+    <div class="books" id="books" data-note="books"></div>
+
+    <div class="sec"><h2>Prognoza</h2><span class="meta">Popunjenost na knjigama (OTB) u odnosu na isti trenutak lani. Klikni dan za detalje.</span></div>
+    <div class="fc">
+      <section class="card" data-note="fc">
+        <div class="fc-head">
+          <div class="legend" id="legend"></div>
+          <div class="seg" role="group" aria-label="Raspon prognoze"><button data-rng="7">7 dana</button><button data-rng="14" aria-pressed="true">14 dana</button><button data-rng="30">30 dana</button></div>
+        </div>
+        <div class="chart" id="chart" role="group" aria-label="Popunjenost po danima"></div>
+        <div class="days" id="days"></div>
+      </section>
+      <section class="card detail" id="detail" aria-live="polite" data-note="det"></section>
+    </div>
+
+    <div class="foot">
+      
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const ROOMS = 50, DEP_AVG = 11, CANC_AVG = 2;
+const f0 = n => new Intl.NumberFormat('hr-HR', { maximumFractionDigits: 0 }).format(n);
+const eur = n => f0(n) + ' €';
+const pctChange = (a, b) => (a - b) / b * 100;
+const arrow = v => (v >= 0 ? '▲ ' : '▼ ') + f0(Math.abs(v)) + '%';
+const WD = ['nedjelja','ponedjeljak','utorak','srijeda','četvrtak','petak','subota'];
+const WDS = ['Ned','Pon','Uto','Sri','Čet','Pet','Sub'];
+const isWE = dw => dw === 5 || dw === 6;
+
+// Povijest: 1. do 28. 9. (1. 9. 2026. je utorak)
+function history(scn) {
+  const out = [];
+  for (let i = 0; i < 28; i++) {
+    const dw = (2 + i) % 7;
+    const occLy = Math.min(100, 80 - i * 0.5 + (isWE(dw) ? 10 : 0));
+    const rLy = Math.round(occLy / 100 * ROOMS), aLy = 122 - i * 0.4 + (isWE(dw) ? 12 : 0);
+    let r = rLy, a = aLy;
+    if (scn === 'good') { r = Math.min(ROOMS, rLy + 3); a = aLy + 3; }
+    if (scn === 'normal') { r = Math.min(ROOMS, rLy + 3); a = aLy - 3; }
+    if (scn === 'bad') { r = rLy - (i >= 25 ? 9 : 4); a = aLy - 5; }
+    out.push({ r, a, rLy, aLy });
+  }
+  return out;
+}
+function agg(days) {
+  const n = days.length, avail = ROOMS * n;
+  const r = days.reduce((s, d) => s + d.r, 0), rLy = days.reduce((s, d) => s + d.rLy, 0);
+  const rev = days.reduce((s, d) => s + d.r * d.a, 0), revLy = days.reduce((s, d) => s + d.rLy * d.aLy, 0);
+  return { r, rLy, avail, rev, revLy, occ: r / avail * 100, occLy: rLy / avail * 100, adr: rev / r, adrLy: revLy / rLy,
+           revpar: rev / avail, revparLy: revLy / avail, fb: r * 33, fbLy: rLy * 32, oth: r * 6, othLy: rLy * 6 };
+}
+// Prognoza: 29. 9. i idućih 29 dana
+function forecast(scn) {
+  const out = [];
+  for (let d = 0; d < 30; d++) {
+    const dw = (2 + d) % 7;
+    const ly = Math.max(15, Math.min(100, Math.round(66 - d * 1.1 + (isWE(dw) ? 14 : 0))));
+    const aLy = Math.round(110 - d * 0.2 + (isWE(dw) ? 12 : 0));
+    let o = ly, a = aLy;
+    if (scn === 'good') { o = Math.min(100, ly + (d >= 9 && d <= 11 ? 14 : 3)); a = aLy + 3; }
+    if (scn === 'normal') { o = ly - 3; a = aLy - 1; if (d === 4) { o = 94; a = 104; } if (d >= 17 && d <= 19) o = Math.min(100, ly + 12); }
+    if (scn === 'bad') { o = d >= 6 && d <= 12 ? ly - 18 : d > 12 ? ly - 8 : ly - 4; a = aLy - 4; }
+    const date = new Date(2026, 8, 29 + d);
+    out.push({ d, dw, date, o, ly, a, aLy });
+  }
+  return out;
+}
+const TODAY = { good: { arr: 8, dep: 10 }, normal: { arr: 10, dep: 15 }, bad: { arr: 9, dep: 17 } };
+const BOOKP = {
+  good:   { day: { n: 16, c: 1, ns: 0 }, week: { n: 98, c: 9, ns: 1 },  month: { n: 372, c: 40, ns: 5 } },
+  normal: { day: { n: 12, c: 2, ns: 1 }, week: { n: 86, c: 12, ns: 2 }, month: { n: 350, c: 46, ns: 6 } },
+  bad:    { day: { n: 6, c: 6, ns: 2 },  week: { n: 58, c: 24, ns: 5 }, month: { n: 300, c: 62, ns: 9 } },
+  ly:     { day: { n: 12, c: 1, ns: 0 }, week: { n: 84, c: 10, ns: 2 }, month: { n: 340, c: 44, ns: 7 } } };
+const BOOK = { good: BOOKP.good.day, normal: BOOKP.normal.day, bad: BOOKP.bad.day, ly: BOOKP.ly.day };
+const fmtDate = dt => `${WD[dt.getDay()]}, ${dt.getDate()}. ${dt.getMonth() + 1}.`;
+
+let scn = 'normal', per = 'day', rng = 14, sel = 0, showAll = false;
+
+function model() {
+  const H = history(scn), F = forecast(scn);
+  const y = H[27], yRooms = y.r;
+  const t = TODAY[scn], stay = yRooms - t.dep, tonight = stay + t.arr;
+  F[0].o = Math.round(tonight / ROOMS * 100);
+  const tonightLy = Math.round(F[0].ly / 100 * ROOMS);
+  const P = { day: agg(H.slice(27)), week: agg(H.slice(21)), month: agg(H) };
+  const w14 = F.slice(0, 14), o14 = w14.reduce((s, x) => s + x.o, 0) / 14, ly14 = w14.reduce((s, x) => s + x.ly, 0) / 14;
+  const rev14 = w14.reduce((s, x) => s + x.o / 100 * ROOMS * x.a, 0), rev14Ly = w14.reduce((s, x) => s + x.ly / 100 * ROOMS * x.aLy, 0);
+
+  // Pravila kao predlošci. Svaka stavka ima isti oblik: kategorija, naziv pravila, metrika uz usporedbu, procjena, jedan gumb.
+  const CAT = { today: ['Danas', 'var(--warn)', 0], risk: ['Rizik za prihod', 'var(--bad)', 1], opp: ['Prilika', 'var(--opp)', 2] };
+  const card = (cat, name, metric, value, cmp, estimate, action, go, focus) =>
+    ({ kind: CAT[cat][0], c: CAT[cat][1], sev: CAT[cat][2], name, line: `${metric}: <b>${value}</b>, ${cmp}`, est: estimate, action, go, focus });
+  const lessRev = v => `Procjena: <b>${eur(v)}</b> manje prihoda nego lani`;
+  const items = [];
+  const nw = F.slice(6, 13), nwO = nw.reduce((s, x) => s + x.o, 0) / 7, nwLy = nw.reduce((s, x) => s + x.ly, 0) / 7;
+  const lowDays = [];
+  if (nwLy - nwO > 10) {
+    const nights = (nwLy - nwO) / 100 * ROOMS * 7, avgA = nw.reduce((s, x) => s + x.a, 0) / 7;
+    nw.forEach(x => lowDays.push(x.d));
+    items.push(card('risk', 'Idući dani zaostaju', `Popunjenost ${nw[0].date.getDate()}. do ${nw[6].date.getDate()}. 10.`, f0(nwO) + '%', `lani ${f0(nwLy)}%`, lessRev(nights * avgA), 'Pregledaj cijene', 'kalendar cijena za idući tjedan', 8));
+  }
+  const last3 = H.slice(25);
+  if (last3.every(d => d.r * d.a < 0.9 * d.rLy * d.aLy)) {
+    const rp = last3.reduce((s, d) => s + d.r * d.a, 0) / (3 * ROOMS), rpLy = last3.reduce((s, d) => s + d.rLy * d.aLy, 0) / (3 * ROOMS);
+    items.push(card('risk', 'Obrazac pada', 'RevPAR zadnja 3 dana', eur(rp), `lani ${eur(rpLy)}`, lessRev((rpLy - rp) * 3 * ROOMS), 'Izvještaj po segmentima', 'izvještaj po tržišnim segmentima'));
+  }
+  const bk = BOOK[scn];
+  if (bk.c >= CANC_AVG * 2 && bk.c >= 4) {
+    const nights = bk.c * 2;
+    items.push(card('risk', 'Val otkazivanja', 'Otkazivanja jučer', f0(bk.c), `prosjek ${CANC_AVG}`, `Procjena: <b>${eur(nights * y.a)}</b> otkazanog prihoda (${nights} noćenja)`, 'Pregledaj otkazane', 'popis otkazanih rezervacija'));
+  }
+  if (t.dep >= DEP_AVG * 1.5) {
+    items.push(card('today', 'Opterećen dan', 'Odlasci danas', f0(t.dep), `prosjek utorkom ${DEP_AVG}`, `Procjena: <b>${t.dep} soba</b> za pripremu, ${t.arr} dolazaka`, 'Popis odlazaka', 'popis današnjih odlazaka'));
+  }
+  let oppDay = null;
+  for (let d = 1; d < 14; d++) { const x = F[d]; if (x.o >= 90 && x.a < x.aLy) { oppDay = x; break; } }
+  if (oppDay) {
+    const rooms = Math.round(oppDay.o / 100 * ROOMS);
+    items.push(card('opp', 'Prilika za cijenu', `ADR ${WDS[oppDay.dw].toLowerCase()} ${oppDay.date.getDate()}. ${oppDay.date.getMonth() + 1}. (popunjeno ${oppDay.o}%)`, eur(oppDay.a), `lani ${eur(oppDay.aLy)}`, lessRev((oppDay.aLy - oppDay.a) * rooms), 'Pregledaj cijene', 'kalendar cijena za ' + fmtDate(oppDay.date), oppDay.d));
+  }
+  items.sort((a, b) => a.sev - b.sev);
+  return { H, F, P, y, t, stay, tonight, tonightLy, o14, ly14, rev14, rev14Ly, items, lowDays, oppDay, bk };
+}
+
+let M;
+function render() {
+  M = model();
+  const p = M.P[per], yd = M.P.day, mo = M.P.month;
+  const perLbl = { day: 'Jučer, ponedjeljak 28. 9.', week: 'Zadnjih 7 dana, 22. do 28. 9.', month: 'Rujan do danas, 1. do 28. 9.' }[per];
+  const cmpLbl = per === 'day' ? 'isti dan lani' : 'isto razdoblje lani';
+  const revChg = pctChange(yd.rev, yd.revLy);
+  const w1 = revChg >= 3 ? ['ok', 'Bolje nego lani', 'good'] : revChg <= -3 ? ['bad', 'Slabije nego lani', 'bad'] : ['ok', 'Slično kao lani', 'ok'];
+  const hot = M.t.dep >= DEP_AVG * 1.5;
+  const gap14 = M.ly14 - M.o14;
+  const w3 = gap14 >= 5 ? ['bad', 'Slabije nego lani', 'bad'] : gap14 <= -5 ? ['ok', 'Bolje nego lani', 'good'] : ['ok', 'Slično kao lani', 'ok'];
+  const widgets = [
+    { note: 'w1', st: w1[0], vc: w1[2], lbl: 'Jučer, ponedjeljak 28. 9.', v: eur(yd.rev), vs: 'prihod od smještaja', verdict: `${w1[1]} (${arrow(revChg)})`, x: `Lani ${eur(yd.revLy)}. Popunjenost ${f0(yd.occ)}%, ADR ${eur(yd.adr)}.` },
+    { note: 'w2', st: hot ? 'warn' : 'ok', vc: hot ? 'warn' : 'ok', lbl: 'Danas, utorak 29. 9.', v: `${M.tonight} od ${ROOMS}`, vs: 'soba zauzeto večeras', verdict: hot ? 'Opterećen dan' : 'Uobičajen dan',
+      x: `Dolasci ${M.t.arr}, odlasci ${M.t.dep}, boravci ${M.stay}.` },
+    { note: 'w3', st: w3[0], vc: w3[2], lbl: 'Idućih 14 dana, na knjigama', v: `${f0(M.o14)}%`, vs: `lani ${f0(M.ly14)}%`, verdict: w3[1], x: `Prihod na knjigama ${eur(M.rev14)}, lani ${eur(M.rev14Ly)}.` }
+  ];
+  document.getElementById('widgets').innerHTML = widgets.map(w => `
+    <article class="w ${w.st === 'ok' ? '' : w.st}" data-note="${w.note}">
+      <div class="lbl">${w.lbl}<span class="st ${w.st}" role="img" aria-label="${w.st === 'ok' ? 'u redu' : 'traži pažnju'}">${w.st === 'ok' ? '✓' : '!'}</span></div>
+      <div class="v">${w.v}<small>${w.vs}</small></div>
+      <span class="verdict ${w.vc}">${w.verdict}</span>
+      <div class="x">${w.x}</div>
+    </article>`).join('');
+
+  const n = M.items.length;
+  document.getElementById('attnHead').style.display = n ? 'flex' : 'none';
+  document.getElementById('attn').style.display = n ? 'grid' : 'none';
+  document.getElementById('allok').style.display = n ? 'none' : 'flex';
+  document.getElementById('count').textContent = n;
+  document.getElementById('attn').innerHTML = M.items.map(it => `
+    <article class="item" style="--c:${it.c}">
+      <span class="tag">${it.kind}</span>
+      <h3>${it.name}</h3>
+      <p class="fact">${it.line}</p>
+      <p class="cons">${it.est}</p>
+      <div class="acts"><button class="btn primary" data-go="${it.go}">${it.action}</button>${it.focus !== undefined ? `<button class="btn" data-focus="${it.focus}">U prognozi</button>` : ''}</div>
+    </article>`).join('');
+
+  document.getElementById('kpiMeta').textContent = `${perLbl}, u odnosu na ${cmpLbl}`;
+  const tone = ch => ch >= 3 ? 'up' : ch <= -3 ? 'down' : '';
+  const k = (name, v, now, ly, lyTxt, sub = '') => { const ch = pctChange(now, ly), tn = tone(ch); return `<div class="kpi ${tn}"><div class="k">${name}</div><div class="v">${v}</div><div class="d"><b class="${tn}">${arrow(ch)}</b>, lani ${lyTxt}</div>${sub ? `<div class="s">${sub}</div>` : ''}</div>`; };
+  document.getElementById('kpis').innerHTML =
+    (() => { const df = p.occ - p.occLy, tn = df >= 2 ? 'up' : df <= -2 ? 'down' : ''; return `<div class="kpi ${tn}"><div class="k">Popunjenost (occupancy)</div><div class="v">${f0(p.occ)}%</div><div class="d"><b class="${tn}">${df >= 0 ? '▲' : '▼'}</b> lani ${f0(p.occLy)}%</div><div class="s">${f0(p.r)} prodanih od ${f0(p.avail)} soba</div></div>`; })() +
+    k('ADR', eur(p.adr), p.adr, p.adrLy, eur(p.adrLy), 'prosječna cijena po prodanoj sobi') +
+    k('RevPAR', eur(p.revpar), p.revpar, p.revparLy, eur(p.revparLy), 'prihod po dostupnoj sobi') +
+    k('Prihod od smještaja', eur(p.rev), p.rev, p.revLy, eur(p.revLy)) +
+    k('Ukupni prihod', eur(p.rev + p.fb + p.oth), p.rev + p.fb + p.oth, p.revLy + p.fbLy + p.othLy, eur(p.revLy + p.fbLy + p.othLy), `hrana i piće ${eur(p.fb)}`) +
+    k('TRevPAR', eur((p.rev + p.fb + p.oth) / p.avail), (p.rev + p.fb + p.oth), (p.revLy + p.fbLy + p.othLy), eur((p.revLy + p.fbLy + p.othLy) / p.avail), 'ukupni prihod po dostupnoj sobi');
+  const b = BOOKP[scn][per], bl = BOOKP.ly[per], bsuf = { day: 'jučer', week: 'u 7 dana', month: 'u rujnu' }[per];
+  const bt = (now, ly, badUp) => { const ch = pctChange(now, ly || 1); return (badUp ? ch >= 50 : ch <= -25) ? 'var(--bad)' : (badUp ? ch <= -25 : ch >= 25) ? 'var(--ok)' : 'var(--ink)'; };
+  document.getElementById('books').innerHTML =
+    `<div class="book"><span>Nove rezervacije ${bsuf}</span><strong style="color:${bt(b.n, bl.n, false)}">${b.n}<em>lani ${bl.n}</em></strong></div>` +
+    `<div class="book"><span>Otkazivanja ${bsuf}</span><strong style="color:${bt(b.c, bl.c, true)}">${b.c}<em>lani ${bl.c}</em></strong></div>` +
+    `<div class="book"><span>No-show ${bsuf}</span><strong style="color:${bt(b.ns, bl.ns, true)}">${b.ns}<em>lani ${bl.ns}</em></strong></div>`;
+
+  renderChart();
+}
+
+function renderChart() {
+  const F = M.F.slice(0, rng);
+  const hasLow = F.some(x => M.lowDays.includes(x.d) || x.ly - x.o > 10), hasOpp = M.oppDay && M.oppDay.d < rng, hasHigh = F.some(x => x.o - x.ly > 10 && !(M.oppDay && x.d === M.oppDay.d));
+  document.getElementById('legend').innerHTML = `<span style="--c:#C9D3DC">Na knjigama</span><span class="lyk" style="--c:#1F2F3E">Lani u ovo vrijeme</span>` +
+    `<span style="--c:#E4907A">Znatno ispod lani</span><span style="--c:#8CC06A">Znatno iznad lani</span>` + (hasOpp ? `<span style="--c:#0076B5">Prilika za cijenu</span>` : '');
+  if (sel >= rng) sel = 0;
+  document.getElementById('chart').innerHTML = F.map(x => {
+    const cls = M.oppDay && x.d === M.oppDay.d ? 'opp' : (M.lowDays.includes(x.d) || x.ly - x.o > 10) ? 'low' : x.o - x.ly > 10 ? 'high' : '';
+    return `<button class="day" data-day="${x.d}" aria-pressed="${x.d === sel}" aria-label="${fmtDate(x.date)}: ${x.o}%, lani ${x.ly}%"><div class="b ${cls}" style="height:${x.o}%"></div><div class="lyl" style="bottom:${x.ly}%"></div></button>`;
+  }).join('');
+  document.getElementById('days').innerHTML = F.map((x, i) => `<span>${rng === 30 && i % 2 ? '&nbsp;' : WDS[x.dw]}<b>${rng === 30 && i % 2 ? '&nbsp;' : x.date.getDate() + '.'}</b></span>`).join('');
+  renderDetail();
+}
+function renderDetail() {
+  const x = M.F[sel], rooms = Math.round(x.o / 100 * ROOMS), roomsLy = Math.round(x.ly / 100 * ROOMS);
+  const isLow = M.lowDays.includes(x.d) || x.ly - x.o > 10, isOpp = M.oppDay && M.oppDay.d === x.d, isHigh = x.o - x.ly > 10;
+  const status = isOpp ? ['var(--oppbg)', 'var(--opp)', 'Prilika: visoka potražnja, cijena ispod lani'] : isLow ? ['var(--badbg)', 'var(--bad)', 'Znatno ispod lani'] : isHigh ? ['var(--okbg)', 'var(--ok)', 'Znatno iznad lani'] : ['var(--tint, #F4F7FA)', 'var(--muted)', 'Približno kao lani'];
+  document.getElementById('detail').innerHTML = `
+    <h3>${fmtDate(x.date)[0].toUpperCase() + fmtDate(x.date).slice(1)}</h3>
+    <p class="dsub">${x.d === 0 ? 'Danas' : 'Za ' + x.d + (x.d === 1 ? ' dan' : ' dana')}</p>
+    <div class="dr"><span>Na knjigama</span><b>${x.o}%<small>${rooms} od ${ROOMS} soba</small></b></div>
+    <div class="dr"><span>Lani u ovo vrijeme</span><b>${x.ly}%<small>${roomsLy} soba</small></b></div>
+    <div class="dr"><span>ADR</span><b>${eur(x.a)}<small>lani ${eur(x.aLy)}</small></b></div>
+    <div class="dr"><span>Prihod na knjigama</span><b>${eur(rooms * x.a)}<small>lani ${eur(roomsLy * x.aLy)}</small></b></div>
+    <div class="dstatus" style="background:${status[0]};color:${status[1]}">${status[2]}</div>
+    <div style="margin-top:12px"><button class="btn" data-go="kalendar cijena za ${fmtDate(x.date)}">Otvori cijene za taj dan</button></div>`;
+}
+
+function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 2600); }
+function setScenario(s) { scn = s; sel = 0; showAll = false; document.querySelectorAll('[data-scn]').forEach(b => b.setAttribute('aria-pressed', b.dataset.scn === s)); render(); }
+
+document.addEventListener('click', e => {
+  const go = e.target.closest('[data-go]'); if (go) { toast('U pravom sustavu ovo otvara: ' + go.dataset.go + '.'); return; }
+  const fo = e.target.closest('[data-focus]'); if (fo) { sel = +fo.dataset.focus; if (sel >= rng) { rng = 14; document.querySelectorAll('[data-rng]').forEach(b => b.setAttribute('aria-pressed', b.dataset.rng === '14')); } renderChart(); document.getElementById('chart').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+  const dy = e.target.closest('[data-day]'); if (dy) { sel = +dy.dataset.day; renderChart(); return; }
+  const pb = e.target.closest('[data-per]'); if (pb) { per = pb.dataset.per; document.querySelectorAll('[data-per]').forEach(b => b.setAttribute('aria-pressed', b === pb)); render(); return; }
+  const rb = e.target.closest('[data-rng]'); if (rb) { rng = +rb.dataset.rng; document.querySelectorAll('[data-rng]').forEach(b => b.setAttribute('aria-pressed', b === rb)); renderChart(); return; }
+  const sb = e.target.closest('[data-scn]'); if (sb) { setScenario(sb.dataset.scn); }
+});
+window.addEventListener('message', e => { if (e.data && ['bad', 'normal', 'good'].includes(e.data.scenario)) setScenario(e.data.scenario); });
+const qs = new URLSearchParams(location.search);
+if (qs.get('embed') === '1') document.body.classList.add('embed');
+if (['bad', 'normal', 'good'].includes(qs.get('s'))) scn = qs.get('s');
+setScenario(scn);
+if (qs.get('static') === '1') {
+  document.body.classList.add('static', 'embed');
+  let cur = null;
+  document.addEventListener('mouseover', e => {
+    const el = e.target.closest('[data-note]');
+    if (el === cur) return;
+    if (cur) cur.classList.remove('noted');
+    cur = el;
+    if (!el) { parent.postMessage({ note: null }, '*'); return; }
+    el.classList.add('noted');
+    const r = el.getBoundingClientRect();
+    parent.postMessage({ note: el.dataset.note, rect: { x: r.left, y: r.top + window.scrollY, w: r.width, h: r.height } }, '*');
+  });
+  document.addEventListener('mouseleave', () => { if (cur) cur.classList.remove('noted'); cur = null; parent.postMessage({ note: null }, '*'); });
+}
+function postHeight() { try { const h = Math.ceil(document.querySelector('main').getBoundingClientRect().height) + (document.body.classList.contains('embed') ? 0 : document.querySelector('.demo-bar').offsetHeight); parent.postMessage({ height: h }, '*'); } catch (e) {} }
+new ResizeObserver(postHeight).observe(document.querySelector('main'));
+window.addEventListener('load', postHeight);
+</script>
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jutarnji izvještaj za hotelske managere | Stella Kralj</title>
+<meta name="description" content="Hipotetski pristup revampu izvještaja za hotelske managere. Testni zadatak za Rentlio, product design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0E3151; --ink:#1F2F3E; --muted:#5E7082; --line:#E4E9EE; --tint:#F4F7FA; --paper:#fff;
+    --accent:#0076B5; --accent-soft:#E8F3FA; --green:#A9CF3A;
+    --ok:#3A7A16; --okbg:#EEF6E2; --bad:#BF4428; --badbg:#FDEEEA; --warn:#A86D12; --warnbg:#FDF4E3;
+    --r:14px; --wrap:1160px;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:76px; }
+  body { margin:0; font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif; color:var(--ink); background:var(--paper); font-size:17px; line-height:1.65; }
+  a { color:var(--accent); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:3px; border-radius:6px; }
+  .wrap { max-width:var(--wrap); margin:0 auto; padding:0 24px; }
+  h1, h2, h3, h4 { margin:0; line-height:1.2; letter-spacing:-.01em; font-weight:600; }
+  h1 { font-size:clamp(38px,5.4vw,62px); font-weight:700; letter-spacing:-.025em; }
+  h2 { font-size:clamp(28px,3.2vw,38px); }
+  h3 { font-size:19px; }
+  h4 { font-size:16px; }
+  p { margin:0 0 1em; max-width:68ch; }
+  .muted { color:var(--muted); }
+  .small { font-size:15px; }
+  .ph { outline:1.5px dashed #9FB3C5; outline-offset:3px; border-radius:4px; }
+
+  .nav { position:sticky; top:0; z-index:20; background:rgba(255,255,255,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav .wrap { display:flex; align-items:center; justify-content:space-between; height:62px; gap:16px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; color:var(--navy); text-decoration:none; font-size:16px; }
+  .brand i { width:10px; height:10px; border-radius:50%; background:var(--green); }
+  .nav ul { list-style:none; display:flex; gap:18px; margin:0; padding:0; font-size:14px; font-weight:500; }
+  .nav ul a { color:var(--muted); text-decoration:none; }
+  .nav ul a:hover { color:var(--navy); }
+  @media (max-width:1000px) { .nav ul { display:none; } }
+
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:999px; font-weight:600; font-size:15px; text-decoration:none; border:1.5px solid var(--accent); cursor:pointer; font-family:inherit; }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { background:#005F92; }
+  .btn-ghost { background:transparent; color:var(--accent); }
+  .btn-ghost:hover { background:var(--accent-soft); }
+
+  .hero { padding:92px 0 76px; border-bottom:1px solid var(--line); }
+  .kicker { font-size:15px; font-weight:600; color:var(--accent); margin:0 0 16px; }
+  .hero h1 { max-width:15ch; }
+  .lead { font-size:21px; color:var(--muted); margin-top:22px; max-width:56ch; }
+  .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px 28px; margin-top:40px; font-size:15px; color:var(--muted); }
+  .meta strong { color:var(--ink); font-weight:600; }
+
+  section.block { padding:92px 0; border-bottom:1px solid var(--line); }
+  section.tinted { background:var(--tint); }
+  .head { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.35fr); gap:48px; margin-bottom:44px; align-items:start; }
+  .head .eyebrow { display:block; font-size:14px; font-weight:600; color:var(--accent); margin-bottom:10px; }
+  .head p { font-size:19px; color:var(--muted); margin:0; }
+  .sub-h { margin:56px 0 18px; }
+  .sub-h p { margin:6px 0 0; color:var(--muted); font-size:16px; }
+
+  .card { background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:24px; }
+  .grid { display:grid; gap:20px; }
+  .g2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .g3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .g4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .card h3 + p, .card h4 + p { margin-top:8px; }
+  .card p { color:var(--muted); font-size:16px; margin-bottom:0; }
+  .lbl { display:block; font-size:13px; font-weight:600; color:var(--accent); margin-bottom:8px; }
+  .dark { background:var(--navy); color:#fff; border-color:var(--navy); }
+  .dark p { color:#D2DEE9; } .dark .lbl { color:var(--green); }
+
+  .bounds .card p span { font-weight:600; color:var(--ink); }
+
+  .meanings .card { border-style:dashed; }
+  .meanings .card.chosen { border:2px solid var(--accent); }
+  .meanings .card:not(.chosen) .lbl { color:var(--muted); }
+  .hypo { margin-top:20px; border-radius:var(--r); background:var(--navy); color:#fff; padding:30px 34px; }
+  .hypo .lbl { color:var(--green); }
+  .hypo .big { font-size:24px; font-weight:600; line-height:1.4; max-width:52ch; margin:4px 0 0; }
+  .hypo .dir { color:#D2DEE9; margin:18px 0 0; max-width:70ch; }
+
+  .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--paper); }
+  table { width:100%; border-collapse:collapse; font-size:15px; min-width:680px; }
+  th, td { text-align:left; padding:15px 18px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-weight:600; background:var(--tint); font-size:14px; }
+  tr:last-child td { border-bottom:0; }
+  td strong { font-weight:600; }
+
+  .steps { list-style:none; margin:0; padding:0; counter-reset:s; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; }
+  .steps li { counter-increment:s; background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:20px; }
+  .steps li::before { content:counter(s); display:block; font-size:24px; font-weight:700; color:var(--accent); margin-bottom:6px; }
+  .steps li.sim { border-style:dashed; }
+  .steps p { font-size:15px; color:var(--muted); margin:6px 0 0; }
+  .note { font-size:15px; color:var(--muted); margin-top:16px; }
+
+  .interview { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+  .interview ul { margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:15px; }
+  .interview li { margin-bottom:6px; }
+  .mx { display:grid; grid-template-columns:96px repeat(2,minmax(0,1fr)); gap:6px; margin-top:14px; font-size:13px; }
+  .mx-h { text-align:center; color:var(--muted); font-weight:600; }
+  .mx-v { color:var(--muted); font-weight:600; display:flex; align-items:center; }
+  .mx-c { display:grid; place-items:center; text-align:center; min-height:48px; padding:6px; border-radius:8px; background:var(--tint); border:1px solid var(--line); font-weight:600; }
+  .mx-key { background:var(--navy); color:#fff; border-color:var(--navy); }
+  .mx-dim { color:var(--muted); font-weight:500; }
+
+  .persona { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; align-items:stretch; }
+  .p-top { display:flex; gap:16px; align-items:center; margin-bottom:18px; }
+  .avatar { width:64px; height:64px; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-weight:700; font-size:20px; flex:none; }
+  .hyp { display:inline-block; font-size:12px; font-weight:600; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:1px 10px; margin-bottom:4px; }
+  .p-row { padding:12px 0; border-top:1px solid var(--line); }
+  .p-row p { margin:4px 0 0; }
+  .quote { font-size:20px; font-weight:600; line-height:1.4; color:var(--ink); margin:18px 0 0; padding-top:18px; border-top:1px solid var(--line); }
+  .goals { list-style:none; margin:14px 0 0; padding:0; counter-reset:g; display:grid; gap:12px; }
+  .goals li { counter-increment:g; display:grid; grid-template-columns:30px minmax(0,1fr); gap:10px; }
+  .goals li::before { content:counter(g); width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; display:grid; place-items:center; font-size:13px; font-weight:700; }
+  .goals li b { font-weight:600; display:block; }
+  .goals li span { color:var(--muted); font-size:15px; }
+  .glance { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:20px; }
+  .glance div { border-top:3px solid var(--green); padding-top:12px; }
+  .glance p { font-size:15px; color:var(--muted); margin:4px 0 0; }
+  .risks .card { border-left:4px solid var(--bad); border-radius:4px var(--r) var(--r) 4px; }
+  .side-p .card { border-style:dashed; }
+
+  .levels { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--paper); }
+  .levels > div { padding:22px 24px; border-right:1px solid var(--line); }
+  .levels > div:last-child { border-right:0; background:var(--navy); color:#fff; }
+  .levels > div:last-child p { color:#D2DEE9; } .levels > div:last-child .lbl { color:var(--green); }
+  .levels p { font-size:15px; color:var(--muted); margin:6px 0 0; }
+  .hier { list-style:none; margin:0; padding:0; display:grid; gap:10px; counter-reset:h; }
+  .hier li { counter-increment:h; display:grid; grid-template-columns:44px minmax(0,1fr) minmax(0,1.2fr); gap:18px; align-items:start; background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:18px 20px; }
+  .hier li::before { content:counter(h); font-size:22px; font-weight:700; color:var(--accent); }
+  .hier p { margin:0; font-size:15px; color:var(--muted); }
+  .inspo .card p { font-size:15px; }
+
+  .scope-col h3 { display:flex; align-items:center; gap:10px; }
+  .pill { font-size:12px; font-weight:600; padding:2px 10px; border-radius:999px; background:var(--tint); color:var(--muted); }
+  .pill.mvp { background:var(--navy); color:#fff; }
+  .scope-col ul { margin:12px 0 0; padding-left:18px; font-size:15px; color:var(--muted); }
+  .scope-col li { margin-bottom:6px; }
+  .decisions .card h4 { margin-bottom:6px; }
+  .decisions .card.no { border-style:dashed; }
+
+  .signals { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin-top:20px; }
+  .sig-list { list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px; font-size:15px; color:var(--muted); }
+  .sig-list li { padding-left:22px; position:relative; }
+  .sig-list.good li::before { content:"✓"; position:absolute; left:0; color:var(--ok); font-weight:700; }
+  .sig-list.bad li::before { content:"!"; position:absolute; left:4px; color:var(--bad); font-weight:700; }
+  .metric { border-top:3px solid var(--navy); padding-top:14px; }
+  .metric.main { border-top-color:var(--green); }
+  .metric p { font-size:15px; color:var(--muted); margin:6px 0 0; }
+
+  .proto { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:20px; align-items:start; }
+  .frame { border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--paper); }
+  .frame-bar { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border-bottom:1px solid var(--line); background:var(--tint); font-size:13px; }
+  .dots { display:flex; gap:6px; } .dots i { width:10px; height:10px; border-radius:50%; background:#CBD5DF; }
+  .frame iframe { display:block; width:100%; height:1600px; border:0; }
+  .controls { position:sticky; top:84px; display:grid; gap:14px; }
+  .scn { display:grid; gap:8px; }
+  .scn button { text-align:left; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font:inherit; cursor:pointer; }
+  .scn button strong { display:block; font-size:15px; font-weight:600; }
+  .scn button span { font-size:13px; color:var(--muted); }
+  .scn button[aria-pressed="true"] { border-color:var(--accent); background:var(--accent-soft); }
+  .try { font-size:14px; color:var(--muted); }
+  .try ul { margin:8px 0 0; padding-left:18px; }
+  .try li { margin-bottom:4px; }
+
+  footer { padding:44px 0; font-size:15px; color:var(--muted); }
+  footer .wrap { display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; }
+
+  @media (max-width:980px) {
+    .head, .g2, .g3, .g4, .persona, .interview, .signals, .proto, .glance, .levels { grid-template-columns:minmax(0,1fr); }
+    .levels > div { border-right:0; border-bottom:1px solid var(--line); }
+    .steps { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .hier li { grid-template-columns:36px minmax(0,1fr); } .hier li > p { grid-column:2; }
+    .controls { position:static; }
+  }
+  @media (max-width:560px) { body { font-size:16px; } section.block { padding:64px 0; } .hero { padding:60px 0 48px; } .steps { grid-template-columns:minmax(0,1fr); } }
+  @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+
+
+  .cat { border-top:4px solid var(--c); }
+  .cat .lbl { color:var(--c); }
+
+  .hero { padding:72px 0 64px; }
+  .hero-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr); gap:56px; align-items:center; }
+  .hero h1 { max-width:13ch; font-size:clamp(36px,4.6vw,56px); }
+  .facts { display:flex; flex-wrap:wrap; gap:14px 32px; margin:36px 0 0; padding-top:20px; border-top:1px solid var(--line); }
+  .facts dt { font-size:13px; color:var(--muted); }
+  .facts dd { margin:2px 0 0; font-weight:600; font-size:15px; }
+  .preview { display:block; border-radius:16px; overflow:hidden; border:1px solid var(--line); box-shadow:0 18px 40px rgba(14,49,81,.12); background:var(--tint); }
+  .preview img { display:block; width:100%; height:auto; }
+  .qa { list-style:none; margin:12px 0 0; padding:0; display:grid; gap:12px; }
+  .qa li { padding-top:12px; border-top:1px solid var(--line); }
+  .qa li:first-child { border-top:0; padding-top:0; }
+  .qa b { display:block; font-weight:600; font-size:15px; }
+  .qa span { color:var(--muted); font-size:14px; }
+  .glance { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .risk-mini { list-style:none; margin:12px 0 0; padding:0; display:grid; gap:8px; font-size:15px; color:var(--muted); }
+  .risk-mini li { padding-left:14px; border-left:3px solid var(--bad); }
+  .risk-mini b { color:var(--ink); font-weight:600; }
+  .chip { font-size:12px; font-weight:600; padding:2px 9px; border-radius:999px; white-space:nowrap; }
+  .chip.bad { background:var(--badbg); color:var(--bad); } .chip.warn { background:var(--warnbg); color:var(--warn); } .chip.opp { background:var(--accent-soft); color:var(--accent); }
+  .levels { margin-top:0; }
+  .wrap.wide { max-width:1440px; }
+  .proto2 { display:grid; grid-template-columns:minmax(0,1fr) 240px; gap:28px; align-items:start; }
+  .side2 { position:sticky; top:84px; background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:18px; }
+  .side2 .scn { display:grid; gap:8px; margin-top:10px; grid-template-columns:minmax(0,1fr); }
+  .side2 .scn button { display:flex; gap:10px; align-items:flex-start; text-align:left; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; cursor:pointer; }
+  .side2 .scn button[aria-pressed="true"] { border-color:var(--accent); background:var(--accent-soft); }
+  .side2 .sw { width:10px; height:10px; border-radius:50%; margin-top:6px; flex:none; }
+  .side2 strong { display:block; font-size:14px; font-weight:600; }
+  .side2 em { font-style:normal; font-size:12px; color:var(--muted); }
+  .try-list { margin:8px 0 0; padding-left:18px; font-size:13px; color:var(--muted); }
+  .try-list li { margin-bottom:4px; }
+  @media (max-width:980px) { .hero-grid, .proto2 { grid-template-columns:minmax(0,1fr); } .side2 { position:static; order:-1; } .glance { grid-template-columns:minmax(0,1fr); } }
+
+  .laptop { min-width:0; }
+  .screen { position:relative; aspect-ratio:16/10; background:#111820; border:12px solid #1C2630; border-bottom-width:16px; border-radius:18px 18px 6px 6px; overflow:hidden; }
+  .screen iframe { position:absolute; top:0; left:0; width:125%; height:125%; border:0; transform:scale(.8); transform-origin:0 0; background:#F5F7F9; }
+  .base { height:14px; margin:0 -3%; background:linear-gradient(#DDE3E8,#C3CBD3); border-radius:0 0 16px 16px; display:flex; justify-content:center; }
+  .base i { width:120px; height:6px; background:#AEB8C1; border-radius:0 0 8px 8px; }
+  .laptop-note { text-align:center; font-size:14px; color:var(--muted); margin:14px 0 0; max-width:none; }
+  @media (max-width:980px) { .screen { aspect-ratio:auto; height:620px; border-width:8px; } .screen iframe { width:100%; height:100%; transform:none; } .base { margin:0 -3%; } }
+
+  .pbar { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
+  .pbar .scn { display:flex; flex-wrap:wrap; gap:8px; }
+  .pbar .scn button { display:inline-flex; align-items:center; gap:8px; background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:8px 14px; font:inherit; font-size:14px; font-weight:500; cursor:pointer; }
+  .pbar .scn button[aria-pressed="true"] { border-color:var(--accent); background:var(--accent-soft); color:var(--navy); }
+  .pbar .sw { width:9px; height:9px; border-radius:50%; }
+  .stage { position:relative; overflow:hidden; border:1px solid var(--line); border-radius:var(--r); background:#F5F7F9; box-shadow:0 18px 40px rgba(14,49,81,.10); }
+  .stage iframe { position:absolute; top:0; left:0; width:1280px; height:1600px; border:0; transform-origin:0 0; }
+  .tip { position:absolute; z-index:5; max-width:320px; background:var(--navy); color:#fff; font-size:14px; line-height:1.5; padding:12px 14px; border-radius:10px; box-shadow:0 10px 24px rgba(14,49,81,.25); pointer-events:none; }
+  .tip strong { display:block; color:var(--green); font-weight:600; margin-bottom:2px; }
+
+  .pgrid { display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:24px; align-items:start; }
+  .pside { position:sticky; top:84px; background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:18px; display:grid; gap:12px; }
+  .pside .scn { display:grid; gap:8px; }
+  .pside .scn button { display:flex; gap:10px; align-items:flex-start; text-align:left; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; cursor:pointer; }
+  .pside .scn button[aria-pressed="true"] { border-color:var(--accent); background:var(--accent-soft); }
+  .pside .sw { width:10px; height:10px; border-radius:50%; margin-top:6px; flex:none; }
+  .pside strong { display:block; font-size:14px; font-weight:600; }
+  .pside em { font-style:normal; font-size:12px; color:var(--muted); }
+  .pside .hint { font-size:13px; color:var(--muted); margin:0; }
+  .pside .btn { justify-content:center; }
+  .btnlike { display:inline-block; font-size:13px; font-weight:600; color:#fff; background:var(--navy); border-radius:8px; padding:3px 10px; white-space:nowrap; }
+  .goto { display:block; font-size:13px; color:var(--muted); margin-top:4px; }
+  .xnote { font-size:15px; color:var(--muted); margin-top:14px; }
+  @media (max-width:980px) { .pgrid { grid-template-columns:minmax(0,1fr); } .pside { position:static; order:-1; } }
+
+  .rule-ex { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+  .ex { margin:12px 0 0; display:grid; gap:10px; }
+  .ex dt { font-size:13px; color:var(--muted); }
+  .ex dd { margin:2px 0 0; font-size:15px; }
+  .ideas { list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px; font-size:15px; }
+  .ideas li { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  @media (max-width:980px) { .rule-ex { grid-template-columns:minmax(0,1fr); } }
+
+  .hier li { align-items:center; }
+  .hier li::before { line-height:1; }
+  .hier h4 { margin:0; }
+  .mgrid { align-items:stretch; }
+  .mcard { background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:22px 24px; display:flex; flex-direction:column; gap:6px; }
+  .mcard.main { border:2px solid var(--accent); }
+  .mtag { align-self:flex-start; font-size:12px; font-weight:600; color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:2px 10px; }
+  .mcard h4 { font-size:18px; margin-top:4px; }
+  .mcard p { margin:0; color:var(--muted); font-size:15px; }
+  .mcard .how { margin-top:auto; padding-top:12px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); }
+  .sigbox { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:20px; background:var(--paper); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+  .sigbox > div { padding:22px 24px; }
+  .sigbox > div + div { border-left:1px solid var(--line); }
+  .sigbox h4 { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .sigbox h4 span { width:24px; height:24px; border-radius:50%; display:grid; place-items:center; font-size:13px; color:#fff; }
+  .sigbox .good h4 span { background:var(--ok); } .sigbox .bad h4 span { background:var(--bad); }
+  .sigbox ul { margin:0; padding-left:18px; color:var(--muted); font-size:15px; }
+  .sigbox li { margin-bottom:6px; }
+  @media (max-width:980px) { .sigbox { grid-template-columns:minmax(0,1fr); } .sigbox > div + div { border-left:0; border-top:1px solid var(--line); } }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Glavna navigacija">
+  <div class="wrap">
+    <a class="brand" href="#top"><i aria-hidden="true"></i>Jutarnji izvještaj</a>
+    <ul>
+      <li><a href="#polaziste">Polazište</a></li>
+      <li><a href="#pristup">Pristup</a></li>
+      <li><a href="#persona">Persona</a></li>
+      <li><a href="#koncept">Koncept</a></li>
+      <li><a href="#scope">Scope</a></li>
+      <li><a href="#metrike">Metrike</a></li>
+      <li><a href="#prototip">Prototip</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="top">
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Testni zadatak za Rentlio, product design</p>
+        <h1>Jutarnji izvještaj za hotelske managere</h1>
+        <p class="lead">Revamp izvještaja počinje od onog koji manager otvara svako jutro: iste brojke, ali poredane po važnosti i s jasnim zaključkom što je dobro, što nije i što napraviti.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="prototip/index.html" target="_blank" rel="noopener">Isprobaj prototip</a>
+          <a class="btn btn-ghost" href="assets/pdf/zadatak-i-razrada.pdf" target="_blank" rel="noopener">Zadatak i razrada (PDF)</a>
+        </div>
+        <dl class="facts">
+          <div><dt>Autorica</dt><dd>Stella Kralj</dd></div>
+          <div><dt>Vrijeme rada</dt><dd>4 sata</dd></div>
+          <div><dt>Isporuka</dt><dd>Razrada i klikabilni prototip</dd></div>
+        </dl>
+      </div>
+      <div class="preview">
+        <img src="assets/img/preview.jpg" alt="Prototip jutarnjeg izvještaja: tri glavna widgeta, stavka koja traži pažnju i brojke u odnosu na lani">
+      </div>
+    </div>
+  </header>
+
+  <!-- POLAZISTE -->
+  <section class="block" id="polaziste" aria-labelledby="polaziste-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Polazište</span><h2 id="polaziste-h">Jedna rečenica konteksta</h2></div>
+        <p>Manageri hotela kažu da su izvještaji spori i ne daju im sliku koju trebaju. Prije početka pogledala sam javne upute Rentlija: podataka i izvještaja ima puno, a uz njih i upute kako ih čitati. Tumačenje je, čini se, na korisniku.</p>
+      </div>
+      <div class="grid g2">
+        <div class="card dark"><span class="lbl">Gdje povlačim crtu</span><p>Ne znam na koje se izvještaje pritužba odnosi ni kako ih manageri koriste, pa ne redizajniram konkretan ekran. Pokazujem pristup i koncept na izmišljenim podacima.</p></div>
+        <div class="card"><span class="lbl">Okvir rješenja</span><p>Rješenje je koncept jednog ekrana na izmišljenim podacima, izgrađen na jasno označenim pretpostavkama i proto-personi. U stvarnom projektu prvi korak bili bi razgovori s managerima, i taj plan je opisan ispod.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIPOTEZA -->
+  <section class="block tinted" id="hipoteza" aria-labelledby="hipoteza-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Problem i hipoteza</span><h2 id="hipoteza-h">Što znači "spori"?</h2></div>
+        <p>Može značiti dvije stvari. Koja je točna, pokazao bi razgovor s managerima. Za ovaj zadatak biram drugu.</p>
+      </div>
+      <div class="grid g2 meanings">
+        <div class="card"><span class="lbl">Značenje 1</span><h3>Sporo se učitava</h3><p>Uglavnom posao za developere. Izmjerila bih ga na početku, da imamo s čime usporediti.</p></div>
+        <div class="card chosen"><span class="lbl">Značenje 2, moj fokus</span><h3>Sporo se dolazi do zaključka</h3><p>Manager predugo traži i tumači brojke. To objašnjava i "ne daju sliku".</p></div>
+      </div>
+      <div class="hypo">
+        <span class="lbl">Hipoteza</span>
+        <p class="big">Manageru ne fale brojke, nego brz odgovor na tri pitanja: kako smo prošli jučer, kakav je današnji dan i trebam li nešto napraviti za dane koji dolaze.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRISTUP -->
+  <section class="block" id="pristup" aria-labelledby="pristup-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Pristup</span><h2 id="pristup-h">Pretpostavke, plan i prva pitanja</h2></div>
+        <p>Kako bih radila u stvarnom projektu: od dopune briefa do testa s managerima. Za ovaj zadatak prva pitanja ostaju otvorena, pa gradim na pretpostavkama.</p>
+      </div>
+      <ol class="steps">
+        <li><h4>Dopuna briefa</h4><p>Prva pitanja</p></li>
+        <li><h4>Pregled izvještaja</h4><p>Što prikazujemo i gdje zapinje</p></li>
+        <li><h4>Razgovori s managerima</h4><p>Što gledaju i odlučuju</p></li>
+        <li><h4>Koncept i prototip</h4><p>Na temelju najvažnijeg</p></li>
+        <li><h4>Test s managerima</h4><p>Prije izrade</p></li>
+      </ol>
+
+      <div class="sub-h"><h3>Prva pitanja</h3><p>Prije plana bih nadopunila brief. Svako pitanje ima adresu i razlog.</p></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:34%">Pitanje</th><th style="width:18%">Kome</th><th>Zašto mi treba</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Je li dashboard dio revampa izvještaja ili zaseban početni ekran?</strong></td><td>Osobi koja je dala brief</td><td>Brief spominje oboje, a o tome ovisi opseg. Za zadatak biram jutarnji izvještaj kao prvi korak revampa.</td></tr>
+            <tr><td><strong>Mogu li vidjeti trenutne izvještaje?</strong></td><td>Osobi koja je dala brief</td><td>Da znam koje podatke već imamo i gdje manager zapinje, prije nego išta predložim.</td></tr>
+            <tr><td><strong>Tko se žalio i kojim riječima?</strong></td><td>Korisničkoj podršci</td><td>Da znam radi li se o malim ili velikim hotelima i znači li "spori" učitavanje ili nešto drugo.</td></tr>
+            <tr><td><strong>Koliko se izvještaji koriste i izvoze?</strong></td><td>Product analitici</td><td>Ako se podaci često izvoze ili traže drugdje, izvještaj ne daje sliku koju manager treba.</td></tr>
+            <tr><td><strong>Koji podaci postoje i kako su ažurni ujutro?</strong></td><td>Developerima</td><td>Da ne predlažem nešto što se ne može pouzdano izračunati.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-h"><h3>Pretpostavke</h3><p>Dok odgovora nema, gradim na ovome. Za svaku je jasno kako bih je provjerila i što bi se promijenilo da nije točna.</p></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Pretpostavka</th><th style="width:26%">Odakle dolazi</th><th style="width:22%">Kako bih provjerila</th><th>Ako nije točna</th></tr></thead>
+          <tbody>
+            <tr><td><strong>"Spori" znači sporo do zaključka</strong></td><td>Pritužba spominje i da izvještaji "ne daju sliku".</td><td>Pitati managere što znači sporo.</td><td>Ako je problem učitavanje, prioritet je tehnička optimizacija.</td></tr>
+            <tr><td><strong>Ujutro želi na jednom mjestu vidjeti jučer, danas i što traži akciju</strong></td><td>Sliku dana slaže iz više izvora, a stalno ga prekidaju.</td><td>Promatranje jutra i sortiranje kartica.</td><td>Mijenja se sadržaj i redoslijed prvog ekrana.</td></tr>
+            <tr><td><strong>Žale se manji i srednji hoteli</strong></td><td>Jedna osoba radi sve, pa za čitanje izvještaja ima najmanje vremena.</td><td>Odgovor podrške na prva pitanja.</td><td>Veliki hoteli s revenue managerom trebaju dublju analizu, a ne sažetak.</td></tr>
+            <tr><td><strong>Ujutro na računalu, preko dana na mobitelu</strong></td><td>Jutarnji pregled radi se za stolom, a dan provodi u hodu.</td><td>Podaci o uređajima.</td><td>Mobilni prikaz postaje glavni, a desktop sporedni.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAZGOVORI -->
+  <section class="block tinted" id="razgovori" aria-labelledby="razgovori-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Razgovori s managerima</span><h2 id="razgovori-h">Prije persone, istraživanje</h2></div>
+        <p>Pet do šest managera, po 45 minuta, ujutro na radnom mjestu. Cilj je pronaći informacije koje, ako ih manager propusti, stvore stvaran problem.</p>
+      </div>
+      <div class="interview">
+        <div class="card"><span class="lbl">Promatranje, 15 min</span><p>Manager radi svoje jutro, a ja bilježim što otvara, kojim redom i gdje zapinje.</p></div>
+        <div class="card"><span class="lbl">Razgovor, 20 min</span>
+          <ul><li>Što si jutros prvo pogledao?</li><li>Što, ako propustiš, stvori najveći problem?</li><li>Kako znaš je li brojka dobra ili loša?</li><li>Na što misliš kad kažeš "sporo"?</li></ul>
+        </div>
+        <div class="card"><span class="lbl">Sortiranje kartica, 10 min</span><p>Podaci se slažu po posljedici i učestalosti.</p>
+          <div class="mx" role="img" aria-label="Matrica posljedice i učestalosti">
+            <div></div><div class="mx-h">Svaki dan</div><div class="mx-h">Povremeno</div>
+            <div class="mx-v">Velika posljedica</div><div class="mx-c mx-key">Prvi ekran</div><div class="mx-c">Upozorenje</div>
+            <div class="mx-v">Mala posljedica</div><div class="mx-c">Pregled</div><div class="mx-c mx-dim">Puni izvještaj</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONA -->
+  <section class="block" id="persona" aria-labelledby="persona-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Za koga dizajniram</span><h2 id="persona-h">Marija i njezino jutro</h2></div>
+        <p>Proto-persona iz pretpostavki, s ciljevima koje rješenje mora ispuniti i rizicima na koje treba paziti.</p>
+      </div>
+      <div class="persona">
+        <article class="card">
+          <div class="p-top">
+            <div class="avatar" aria-hidden="true">MK</div>
+            <div><span class="hyp">Proto-persona</span><h3>Marija, 41, general manager</h3><p class="muted small" style="margin:0">Sezonski hotel s 50 soba, bez revenue managera</p></div>
+          </div>
+          <div class="p-row"><h4>Jutro</h4><p>U 20 minuta slaže sliku dana prije dogovora s timom, a stalno je prekidaju.</p></div>
+          <div class="p-row"><h4>Frustracija</h4><p>Izvještaji kažu što se dogodilo, a ne što to znači ni što napraviti.</p></div>
+          <p class="quote">"Treba mi da znam kako stojimo i gdje trebam reagirati."</p>
+        </article>
+        <article class="card">
+          <h3>Ciljevi koje rješenje mora ispuniti</h3>
+          <ol class="goals">
+            <li><div><b>U dvije minute znati kako stoji</b><span>Bez više izvještaja i računanja u glavi.</span></div></li>
+            <li><div><b>Na vrijeme vidjeti problem ili priliku</b><span>Dok još može utjecati, npr. na cijene.</span></div></li>
+            <li><div><b>Znati što napraviti</b><span>Svaki signal vodi na sljedeći korak.</span></div></li>
+            <li><div><b>Vjerovati brojkama</b><span>Uvijek je jasno s čime se uspoređuje.</span></div></li>
+          </ol>
+        </article>
+      </div>
+
+      <div class="grid g2" style="margin-top:20px">
+        <div class="card">
+          <h3>Što želi vidjeti na prvi pogled</h3>
+          <div class="glance">
+            <div><h4>Jučer</h4><p>Prihod od smještaja, popunjenost i ADR u odnosu na isti dan lani</p></div>
+            <div><h4>Danas</h4><p>Zauzete sobe večeras, dolasci, odlasci i boravci</p></div>
+            <div><h4>Idućih 14 dana</h4><p>Popunjenost na knjigama u odnosu na lani, te rizici i prilike</p></div>
+          </div>
+        </div>
+        <div class="card risks-card">
+          <h3>Rizici koji bi pokvarili rješenje</h3>
+          <ul class="risk-mini">
+            <li><b>Previše upozorenja:</b> ako sve crveni, ništa nije važno.</li>
+            <li><b>Netočan zaključak:</b> jedna kriva oznaka ruši povjerenje.</li>
+            <li><b>Pogrešna usporedba:</b> u sezonskom poslu uspoređuje se s istim danom lani.</li>
+            <li><b>Skrivene brojke:</b> detalji moraju biti jedan klik daleko.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid g2 side-p" style="margin-top:20px">
+        <div class="card"><span class="lbl">Provjera jednostavnosti</span><h4>Ivan, vlasnik obiteljskog hotela sa 16 soba</h4><p>Sve radi sam i uglavnom s mobitela. Ako Ivan nešto ne razumije u prvih nekoliko sekundi, rješenje je presloženo.</p></div>
+        <div class="card"><span class="lbl">Anti-persona</span><h4>Analitičar koji treba sve detalje</h4><p>Treba filtere, segmente i izvoz. Za njega ostaju detaljni izvještaji, zato ne redizajniram sve, nego jutarnji ulaz u njih.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONCEPT -->
+  <section class="block tinted" id="koncept" aria-labelledby="koncept-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Koncept</span><h2 id="koncept-h">Jutarnji izvještaj koji sam čita brojke</h2></div>
+        <p>Hoteli obično imaju dnevni izvještaj za managera: sažetak soba, prihoda i rezervacija u odnosu na isti dan lani. Pretpostavljam da se koristi ujutro kao priprema za dan: kako smo stajali jučer u odnosu na lani, što nas čeka danas i koji rizici i prilike dolaze u idućim danima. Brojke su tu, ali tumačenje je na manageru. Moj prijedlog dodaje razinu iznad.</p>
+      </div>
+      <div class="levels">
+        <div><span class="lbl" style="color:var(--muted)">Detaljni izvještaji</span><h4>Svaka brojka</h4><p>Za analizu. Ostaju kakvi jesu.</p></div>
+        <div><span class="lbl" style="color:var(--muted)">Klasični jutarnji izvještaj</span><h4>Ključne brojke</h4><p>Tumačenje je na manageru.</p></div>
+        <div><span class="lbl">Moj prijedlog</span><h4>Brojke i zaključak</h4><p>Po važnosti, s ocjenom, posljedicom i korakom.</p></div>
+      </div>
+
+      <div class="sub-h"><h3>Hijerarhija ekrana</h3><p>Od odgovora prema detaljima.</p></div>
+      <ol class="hier">
+        <li><h4>Tri glavna widgeta</h4><p>Ako Marija pogleda samo njih, mora joj biti jasno kako stvari stoje: jučer, danas i idućih 14 dana, svaki s ocjenom.</p></li>
+        <li><h4>Traži tvoju pažnju</h4><p>Tumačenje i sljedeći korak: što odstupa, koliko to vrijedi i što napraviti. Prvo današnji dan i gosti, zatim rizik za prihod, pa prilike.</p></li>
+        <li><h4>Brojke</h4><p>Podaci na kojima se temelje widgeti i stavke, za one koji žele sami provjeriti i protumačiti. I dalje uz jasan signal je li stanje u redu.</p></li>
+        <li><h4>Prognoza</h4><p>Idućih 7, 14 ili 30 dana u odnosu na lani, s detaljima po danu.</p></li>
+        <li><h4>Detaljni izvještaji</h4><p>Uvijek dostupni jednim klikom iz zaglavlja, za dubinsku analizu.</p></li>
+      </ol>
+
+      <div class="sub-h"><h3>Kako nastaju stavke</h3><p>Svaka stavka nastaje iz jednostavnog pravila i ima isti predložak, pa se mijenjaju samo brojke. Pravila se računaju jednom noću iz rezervacija i povijesti za usporedbu s lani. Pragove bih odredila iz podataka, relativno i prilagođeno objektu, a stavke se prikazuju redom: prvo današnji dan i gosti, zatim rizik za prihod, pa prilike.</p></div>
+      <div class="rule-ex">
+        <div class="card">
+          <span class="lbl">Primjer pravila</span>
+          <h3>Idući dani zaostaju</h3>
+          <dl class="ex">
+            <div><dt>Uvjet</dt><dd>Popunjenost za idućih 7 do 14 dana je X % niža nego lani u isto vrijeme</dd></div>
+            <div><dt>Na kartici</dt><dd>Popunjenost za taj tjedan i vrijednost od lani</dd></div>
+            <div><dt>Procjena</dt><dd>Koliko prihoda manje nego lani</dd></div>
+            <div><dt>Gumb</dt><dd><span class="btnlike">Pregledaj cijene</span> vodi na kalendar cijena za te datume</dd></div>
+          </dl>
+        </div>
+        <div class="card">
+          <span class="lbl">Ostale ideje za pravila</span>
+          <ul class="ideas">
+            <li><span class="chip warn">Danas</span> Neobično puno dolazaka ili odlazaka</li>
+            <li><span class="chip bad">Rizik za prihod</span> Više otkazivanja nego obično</li>
+            <li><span class="chip bad">Rizik za prihod</span> Nekoliko dana zaredom slabije nego lani</li>
+            <li><span class="chip warn">Danas</span> Dolasci bez plaćenog depozita ili garancije</li>
+            <li><span class="chip warn">Danas</span> Sobe izvan upotrebe na dan kad je hotel gotovo pun</li>
+            <li><span class="chip bad">Rizik za prihod</span> Nove rezervacije za idući mjesec stižu sporije nego lani</li>
+            <li><span class="chip bad">Rizik za prihod</span> Udio izravnih rezervacija pada u korist posrednika</li>
+            <li><span class="chip opp">Prilika</span> Datum je gotovo pun, a cijena je niža nego lani</li>
+            <li><span class="chip opp">Prilika</span> Slab dan između dva jaka, npr. za ponudu ili minimalni boravak</li>
+            <li><span class="chip opp">Prilika</span> Jedan tip sobe se rasprodaje brže od ostalih</li>
+          </ul>
+          <p class="small muted" style="margin:14px 0 0">Koja pravila i s kojim pragovima, odlučila bih nakon razgovora s managerima.</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:20px"><h4>Zašto pravila, a ne odmah AI</h4><p>Kod poslovnih brojki jedna netočna rečenica ruši povjerenje. Pravila su predvidljiva i mjerljiva, a AI može kasnije pomoći s formulacijom, iz već izračunatih brojki.</p></div>
+    </div>
+  </section>
+
+  <!-- SCOPE -->
+  <section class="block" id="scope" aria-labelledby="scope-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Scope</span><h2 id="scope-h">Što ide prvo, a što čeka</h2></div>
+        <p>MVP koristi samo podatke koji već postoje. Mobilni prikaz i pragovi prilagođeni objektu su u MVP-u, jer bez njih izvještaj ne bi radio za dio korisnika.</p>
+      </div>
+      <div class="grid g3">
+        <div class="card scope-col"><h3>Jutarnji izvještaj <span class="pill mvp">MVP</span></h3><ul><li>Tri widgeta s ocjenom</li><li>Nekoliko pravila s pragovima prilagođenima objektu</li><li>Brojke u odnosu na lani</li><li>Prognoza na 7, 14 i 30 dana</li><li>Mobilni prikaz</li></ul></div>
+        <div class="card scope-col"><h3>Dolazi k tebi <span class="pill">Faza 2</span></h3><ul><li>Email u 7:00</li><li>Dijeljenje s timom</li><li>Obavijest kad se pojavi važna stavka</li></ul></div>
+        <div class="card scope-col"><h3>Svjesno čeka <span class="pill">Kasnije</span></h3><ul><li>Manager sam podešava pragove</li><li>AI formulacija i pitanja</li><li>Ostali izvještaji</li></ul></div>
+      </div>
+      <div class="grid g3 decisions" style="margin-top:20px">
+        <div class="card"><h4>Trade-off: odgovor ispred tablice</h4><p>Na prvi pogled manje brojki, ali odmah jasan zaključak. Sve brojke su jedan korak niže.</p></div>
+        <div class="card no"><h4>Ne radim: AI ne odlučuje što je važno</h4><p>Pravila određuju sadržaj. AI eventualno kasnije pomaže s formulacijom.</p></div>
+        <div class="card"><h4>Poveznice umjesto akcija</h4><p>Stavke vode na postojeće dijelove sustava. Ovo je izvještaj, a ne alat za zadatke.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRIKE -->
+  <section class="block tinted" id="metrike" aria-labelledby="metrike-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Metrike</span><h2 id="metrike-h">Kako znam da radi</h2></div>
+        <p>Mjerim ponašanje i ishod, ne zadovoljstvo. Na početku bih izmjerila i vrijeme učitavanja i vrijeme do odgovora, a ciljeve postavila nakon toga.</p>
+      </div>
+      <div class="grid g3 mgrid">
+        <div class="mcard main"><span class="mtag">Glavna metrika</span><h4>Vrijeme do odgovora</h4><p>Koliko treba manageru da kaže kako stvari stoje i treba li nešto napraviti.</p><span class="how">Test s managerima, prije i poslije</span></div>
+        <div class="mcard"><span class="mtag">Ponašanje</span><h4>Reakcija na stavke</h4><p>Udio stavki nakon kojih manager isti dan otvori predloženi korak.</p><span class="how">Analitika klikova na gumbe</span></div>
+        <div class="mcard"><span class="mtag">Navika</span><h4>Manje traženja drugdje</h4><p>Za dnevnu sliku manageri rjeđe otvaraju druge izvještaje, izvoze ili alate.</p><span class="how">Analitika korištenja izvještaja</span></div>
+      </div>
+      <div class="sigbox">
+        <div class="good"><h4><span aria-hidden="true">✓</span> Signali da radi</h4><ul><li>Jutarnji izvještaj se otvara svaki dan, prije drugih izvještaja.</li><li>U testu manageri bez pomoći kažu što je dobro, a što ne.</li><li>Na stavke se reagira.</li></ul></div>
+        <div class="bad"><h4><span aria-hidden="true">!</span> Signali da ne radi</h4><ul><li>Stavke se ignoriraju, pa su pravila preosjetljiva.</li><li>Manageri i dalje prvo otvaraju druge izvještaje ili alate.</li><li>Raste broj pitanja podršci o značenju brojki.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROTOTIP -->
+  <section class="block" id="prototip" aria-labelledby="prototip-h">
+    <div class="wrap">
+      <div class="head">
+        <div><span class="eyebrow">Prototip</span><h2 id="prototip-h">Jutarnji izvještaj, dio po dio</h2></div>
+        <p>Hotel s 50 soba i izmišljeni podaci. Odaberi scenarij i prijeđi mišem preko dijelova ekrana za kratko objašnjenje. Za klikanje otvori klikabilni prototip.</p>
+      </div>
+      <div class="pgrid">
+        <div class="stage" id="stage">
+          <iframe id="proto" src="prototip/index.html?static=1" title="Prikaz jutarnjeg izvještaja s objašnjenjima" tabindex="-1"></iframe>
+          <div class="tip" id="tip" role="tooltip" hidden></div>
+        </div>
+        <aside class="pside" aria-label="Scenariji prototipa">
+          <h4>Scenarij</h4>
+          <div class="scn" role="group" aria-label="Scenarij">
+            <button data-scn="bad" aria-pressed="false"><i class="sw" style="background:var(--bad)"></i><span><strong>Alarmantan dan</strong><em>Četiri stavke traže reakciju</em></span></button>
+            <button data-scn="normal" aria-pressed="true"><i class="sw" style="background:var(--warn)"></i><span><strong>Uobičajen dan</strong><em>Jedna prilika za višu cijenu</em></span></button>
+            <button data-scn="good" aria-pressed="false"><i class="sw" style="background:var(--ok)"></i><span><strong>Sve u redu</strong><em>Ništa ne traži reakciju</em></span></button>
+          </div>
+          <p class="hint">Prijeđi mišem preko dijelova ekrana za kratko objašnjenje.</p>
+          <a class="btn btn-primary" href="prototip/index.html" target="_blank" rel="noopener">Isprobaj prototip</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Stella Kralj, <a href="mailto:stella.kralj@gmail.com">stella.kralj@gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+  const NOTES = {
+    hdr: ['Zaglavlje', 'Datum i trenutak stanja, da manager zna koliko su brojke svježe. Detaljni izvještaji su uvijek na dohvat, gore desno.'],
+    w1: ['Jučer', 'Prihod od smještaja u odnosu na isti dan lani, uz popunjenost i ADR. Tri stanja prema pragu: bolje, slično ili slabije nego lani.'],
+    w2: ['Danas', 'Zauzete sobe večeras, dolasci, odlasci i boravci. Opterećen dan kad je dolazaka ili odlazaka znatno više od prosjeka tog dana u tjednu. Služi za raspored tima.'],
+    w3: ['Idućih 14 dana', 'Popunjenost na knjigama u odnosu na isti trenutak lani. Jedino mjesto gdje manager još može utjecati na rezultat, npr. cijenama.'],
+    attn: ['Traži tvoju pažnju', 'Stavke iz jednostavnih pravila, sve u istom predlošku: metrika uz usporedbu, procjena i jedan korak. Prvo današnji dan, zatim rizik za prihod, pa prilike.'],
+    kpis: ['Brojke', 'Klasične brojke managerskog izvještaja za jučer, 7 dana ili mjesec, u odnosu na lani. Na njima se temelje widgeti i stavke, pa se svaki zaključak može provjeriti.'],
+    books: ['Rezervacije', 'Nove rezervacije, otkazivanja i no-show u odnosu na lani. Rani znak promjene potražnje, prije nego što se vidi u popunjenosti.'],
+    fc: ['Prognoza', 'Popunjenost na knjigama po danu u odnosu na lani. Boja pokazuje dane znatno ispod, približno kao ili iznad lani te priliku za cijenu.'],
+    det: ['Detalj dana', 'Popunjenost, ADR i prihod na knjigama za odabrani dan, uz usporedbu s lani.']
+  };
+  const W = 1280, frame = document.getElementById('proto'), stage = document.getElementById('stage'), tip = document.getElementById('tip');
+  let H = 1600, scale = 1;
+  function fit() { scale = stage.clientWidth / W; frame.style.transform = `scale(${scale})`; stage.style.height = Math.ceil(H * scale) + 'px'; }
+  window.addEventListener('resize', fit);
+  window.addEventListener('message', e => {
+    if (e.source !== frame.contentWindow || !e.data) return;
+    if (e.data.height) { H = e.data.height; frame.style.height = H + 'px'; fit(); }
+    if ('note' in e.data) {
+      if (!e.data.note) { tip.hidden = true; return; }
+      const n = NOTES[e.data.note]; if (!n) return;
+      tip.innerHTML = `<strong>${n[0]}</strong>${n[1]}`; tip.hidden = false;
+      const r = e.data.rect, sw = stage.clientWidth, tw = tip.offsetWidth, th = tip.offsetHeight;
+      let left = Math.min(Math.max(8, r.x * scale), sw - tw - 8);
+      let top = (r.y + r.h) * scale + 10;
+      if (top + th > stage.clientHeight - 8) top = Math.max(8, r.y * scale - th - 10);
+      tip.style.left = left + 'px'; tip.style.top = top + 'px';
+    }
+  });
+  const btns = document.querySelectorAll('[data-scn]');
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    frame.contentWindow.postMessage({ scenario: b.dataset.scn }, '*');
+  }));
+  fit();
+</script>
+</body>
+</html>
