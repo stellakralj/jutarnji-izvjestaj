@@ -305,6 +305,22 @@
   .disclaimer { border-left:4px solid var(--accent); background:var(--tint); padding:18px 24px; border-radius:0 12px 12px 0; }
   .disclaimer p { margin:0; max-width:none; color:var(--ink); }
   .hypo + .sub-h { margin-top:44px; }
+
+  .pextra { display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:20px; margin-top:20px; }
+  .pwatch, .pside-p { background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:24px; }
+  .pwatch h4, .pside-p h4 { font-size:17px; margin:0 0 4px; }
+  .psub { font-size:14px; color:var(--muted); margin:0 0 14px; }
+  .wgrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .witem { border-left:3px solid var(--bad); background:#FFF8F6; border-radius:0 10px 10px 0; padding:12px 14px; }
+  .witem b { display:block; font-weight:600; font-size:15px; }
+  .witem span { font-size:13.5px; color:var(--muted); }
+  .pside-p h4 { margin-bottom:14px; }
+  .sp { padding:12px 0; border-top:1px solid var(--line); }
+  .sp:first-of-type { border-top:0; padding-top:0; }
+  .sp-lbl { display:block; font-size:12px; font-weight:600; color:var(--accent); margin-bottom:2px; }
+  .sp b { display:block; font-weight:600; font-size:15px; }
+  .sp > span:last-child { font-size:13.5px; color:var(--muted); }
+  @media (max-width:980px) { .pextra, .wgrid { grid-template-columns:minmax(0,1fr); } }
 </style>
 </head>
 <body>
@@ -475,7 +491,23 @@
           </div>
         </div>
       </div>
-      <p class="pnote"><b>Pazi na:</b> previše upozorenja, netočan zaključak, usporedbu bez sezonskog konteksta i skrivene brojke. <b>Uz Mariju:</b> Ivan, vlasnik malog hotela, provjera je jednostavnosti, a analitičaru koji treba sve detalje ostaju puni izvještaji.</p>
+      <div class="pextra">
+        <div class="pwatch">
+          <h4>Na što paziti</h4>
+          <p class="psub">Ako ovo ne poštujemo, novi izvještaj postaje samo još jedan ekran.</p>
+          <div class="wgrid">
+            <div class="witem"><b>Previše upozorenja</b><span>Ako sve crveni, ništa nije važno. Stavki mora biti malo.</span></div>
+            <div class="witem"><b>Netočan zaključak</b><span>Jedna kriva oznaka o novcu ruši povjerenje u cijeli izvještaj.</span></div>
+            <div class="witem"><b>Usporedba bez sezonskog konteksta</b><span>Uspoređuje se s istim danom lani, a ne s prošlim tjednom.</span></div>
+            <div class="witem"><b>Skrivene brojke</b><span>Detalji moraju biti jedan klik daleko, inače se vraća starom izvještaju.</span></div>
+          </div>
+        </div>
+        <div class="pside-p">
+          <h4>Uz Mariju</h4>
+          <div class="sp"><span class="sp-lbl">Provjera jednostavnosti</span><b>Ivan, vlasnik malog hotela</b><span>Sve radi sam, uglavnom s mobitela. Ako on nešto ne razumije u nekoliko sekundi, rješenje je presloženo.</span></div>
+          <div class="sp"><span class="sp-lbl">Anti-persona</span><b>Analitičar koji treba sve detalje</b><span>Za njega ostaju puni izvještaji, zato ne redizajniram sve, nego jutarnji ulaz u njih.</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
