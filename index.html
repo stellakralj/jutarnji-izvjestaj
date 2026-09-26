@@ -321,6 +321,59 @@
   .sp b { display:block; font-weight:600; font-size:15px; }
   .sp > span:last-child { font-size:13.5px; color:var(--muted); }
   @media (max-width:980px) { .pextra, .wgrid { grid-template-columns:minmax(0,1fr); } }
+
+  .head { align-items:end; }
+  .steps li { background:var(--accent-soft); border-color:#CFE4F2; }
+  .steps li::before { color:var(--navy); }
+  .steps h4 { color:var(--navy); }
+  .qcard { margin-top:28px; }
+  .qintro { font-size:16px; color:var(--ink) !important; margin:4px 0 16px !important; }
+  .qlist { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 28px; }
+  .qlist li { padding:10px 0 0; border-top:1px solid var(--line); }
+  .qlist b { display:block; font-weight:600; font-size:15px; }
+  .qlist span { font-size:13px; color:var(--muted); }
+  .mx2 { display:grid; grid-template-columns:auto 1fr 1fr; gap:6px; margin-top:14px; font-size:12.5px; align-items:stretch; }
+  .mx2 .mh { text-align:center; color:var(--muted); font-weight:600; padding-bottom:2px; }
+  .mx2 .mv { color:var(--muted); font-weight:600; display:flex; align-items:center; padding-right:4px; max-width:84px; line-height:1.25; }
+  .mx2 .mc { display:flex; align-items:center; justify-content:center; text-align:center; min-height:52px; padding:6px; border-radius:8px; background:var(--tint); border:1px solid var(--line); font-weight:600; line-height:1.25; }
+  .mx2 .key { background:var(--navy); color:#fff; border-color:var(--navy); }
+  .mx2 .dim { color:var(--muted); font-weight:500; }
+  .prisks { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .prisks span { font-size:13px; color:var(--muted); border-left:3px solid var(--bad); padding:4px 0 4px 10px; }
+  .prisks b { display:block; color:var(--ink); font-weight:600; font-size:14px; }
+  .sidep { margin-top:20px; }
+  .hier2 { background:var(--paper); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+  .hrow { display:grid; grid-template-columns:52px minmax(0,.9fr) minmax(0,1.3fr) minmax(0,1.1fr); gap:18px; align-items:center; padding:16px 22px; border-top:1px solid var(--line); font-size:15px; }
+  .hrow:first-child { border-top:0; }
+  .hhead { background:var(--tint); font-size:13px; font-weight:600; color:var(--muted); padding-top:10px; padding-bottom:10px; }
+  .hn { width:34px; height:34px; border-radius:50%; background:var(--accent); color:#fff; display:grid; place-items:center; font-weight:700; }
+  .hrow b { font-weight:600; }
+  .hrow > span:nth-child(3) { color:var(--ink); }
+  .hrow > span:nth-child(4) { color:var(--muted); }
+  .why-m { background:var(--accent-soft); border-radius:12px; padding:14px 18px; font-size:15px; margin:0 0 20px; }
+  .why-m b { font-weight:600; color:var(--navy); }
+  @media (max-width:980px) { .qlist, .prisks { grid-template-columns:minmax(0,1fr); } .hhead { display:none; } .hrow { grid-template-columns:40px minmax(0,1fr); } .hrow > span:nth-child(n+3) { grid-column:2; } }
+
+  .head { display:block !important; margin-bottom:40px; }
+  .head h2 { margin-top:2px; }
+  .head p { margin-top:14px !important; max-width:760px; font-size:18px; }
+  section.block { padding:88px 0; }
+  .sub-h { margin:56px 0 18px; }
+  .sub-h h3 { font-size:21px; }
+  .intro2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+  .intro2 > div { background:var(--tint); border-radius:var(--r); padding:22px 24px; border-top:3px solid var(--accent); }
+  .intro2 > div:last-child { border-top-color:var(--green); }
+  .intro2 p { margin:0; max-width:none; }
+  .qintro { max-width:none !important; }
+  .inote { font-size:13px; color:var(--muted); opacity:.8; }
+  .qlist { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+  @media (max-width:980px) { .intro2, .qlist { grid-template-columns:minmax(0,1fr) !important; } }
+
+  .nav .wrap { height:68px; }
+  .nav ul { gap:34px !important; font-size:15px !important; }
+  .nav ul a { padding:6px 2px; border-bottom:2px solid transparent; transition:color .15s, border-color .15s; }
+  .nav ul a:hover { border-bottom-color:var(--accent); }
+  @media (max-width:1100px) { .nav ul { gap:22px !important; } }
 </style>
 </head>
 <body>
@@ -346,15 +399,13 @@
       <div>
         <p class="kicker">Testni zadatak za Rentlio, product design</p>
         <h1>Jutarnji izvještaj za hotelske managere</h1>
-        <p class="lead">Revamp izvještaja počinje od onog koji manager otvara svako jutro: iste brojke, ali poredane po važnosti i s jasnim zaključkom što je dobro, što nije i što napraviti.</p>
         <div class="actions">
           <a class="btn btn-primary" href="prototip/index.html" target="_blank" rel="noopener">Isprobaj prototip</a>
           <a class="btn btn-ghost" href="assets/pdf/zadatak-i-razrada.pdf" target="_blank" rel="noopener">Zadatak i razrada (PDF)</a>
         </div>
         <dl class="facts">
-          <div><dt>Autorica</dt><dd>Stella Kralj</dd></div>
+          <div><dt>Dizajn</dt><dd>Stella Kralj</dd></div>
           <div><dt>Vrijeme rada</dt><dd>4 sata</dd></div>
-          <div><dt>Isporuka</dt><dd>Razrada i klikabilni prototip</dd></div>
         </dl>
       </div>
       <div class="preview">
@@ -366,9 +417,9 @@
   <!-- POLAZISTE -->
   <section class="slim" id="polaziste" aria-label="Polazište">
     <div class="wrap">
-      <div class="disclaimer">
-        <span class="lbl">Polazište</span>
-        <p>Brief je jedna rečenica: manageri hotela kažu da su izvještaji spori i ne daju im sliku koju trebaju. Pogledala sam javne upute Rentlija, ali ne znam na koje se izvještaje pritužba odnosi ni kako ih manageri koriste. Zato ne redizajniram konkretan ekran, nego pokazujem pristup i koncept na izmišljenim podacima, uz jasno označene pretpostavke.</p>
+      <div class="intro2">
+        <div><span class="lbl">Zadatak</span><p>Manageri hotela žale se da su postojeći izvještaji spori i ne daju im sliku koju trebaju za vođenje objekta. Zadatak je revamp izvještaja za managere: razrada (prva pitanja, faze, trade-off i mjerenje) i prototip dashboarda s ključnim informacijama koje manager treba kad ujutro otvori Rentlio.</p></div>
+        <div><span class="lbl">Prije čitanja</span><p>Pogledala sam javne upute Rentlija da steknem okvirnu sliku, ali stvarne izvještaje i korisnike nisam vidjela. Zato stranica pokazuje kako bih pristupila problemu i koncept rješenja na izmišljenim podacima, a sve što nisam mogla provjeriti označeno je kao pretpostavka.</p></div>
       </div>
     </div>
   </section>
@@ -388,7 +439,7 @@
         <span class="lbl">Hipoteza</span>
         <p class="big">Manageru ne fale brojke, nego brz odgovor na tri pitanja: kako smo prošli jučer, kakav je današnji dan i trebam li nešto napraviti za dane koji dolaze.</p>
       </div>
-      <div class="sub-h"><h3>Pretpostavke na kojima gradim</h3><p>Dok odgovora nema, hipoteza stoji na ovome. Za svaku je jasno kako bih je provjerila i što bi se promijenilo da nije točna.</p></div>
+      <div class="sub-h"><h3>Pretpostavke na kojima gradim</h3><p>Dok odgovora nema, hipoteza stoji na ovome.</p></div>
       <div class="table-wrap">
         <table>
           <thead><tr><th style="width:26%">Pretpostavka</th><th style="width:26%">Odakle dolazi</th><th style="width:22%">Kako bih provjerila</th><th>Ako nije točna</th></tr></thead>
@@ -412,25 +463,24 @@
         <p>Kako bih radila u stvarnom projektu: od dopune briefa do testa s managerima.</p>
       </div>
       <ol class="steps">
-        <li><h4>Dopuna briefa</h4><p>Prva pitanja</p></li>
-        <li><h4>Pregled izvještaja</h4><p>Što prikazujemo i gdje zapinje</p></li>
+        <li><h4>Dopuna briefa</h4><p>Interna pitanja o onome što fali</p></li>
+        <li><h4>Pregled izvještaja</h4><p>Upoznati alat: koje podatke prikazujemo i čime raspolažemo</p></li>
         <li><h4>Razgovori s managerima</h4><p>Što gledaju i odlučuju</p></li>
-        <li><h4>Koncept i prototip</h4><p>Na temelju najvažnijeg</p></li>
-        <li><h4>Test s managerima</h4><p>Prije izrade</p></li>
+        <li><h4>Koncept i prototip</h4><p>Iz onoga što se u razgovorima pokaže najvažnijim</p></li>
+        <li><h4>Test s managerima</h4><p>Provjera prototipa prije izrade</p></li>
       </ol>
 
-      <div class="sub-h"><h3>Prva pitanja</h3><p>Prije plana bih nadopunila brief. Svako pitanje ima adresu i razlog.</p></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th style="width:34%">Pitanje</th><th style="width:18%">Kome</th><th>Zašto mi treba</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Je li dashboard dio revampa izvještaja ili zaseban početni ekran?</strong></td><td>Osobi koja je dala brief</td><td>Brief spominje oboje, a o tome ovisi opseg. Za zadatak biram jutarnji izvještaj kao prvi korak revampa.</td></tr>
-            <tr><td><strong>Mogu li vidjeti trenutne izvještaje?</strong></td><td>Osobi koja je dala brief</td><td>Da znam koje podatke već imamo i gdje manager zapinje, prije nego išta predložim.</td></tr>
-            <tr><td><strong>Tko se žalio i kojim riječima?</strong></td><td>Korisničkoj podršci</td><td>Da znam radi li se o malim ili velikim hotelima i znači li "spori" učitavanje ili nešto drugo.</td></tr>
-            <tr><td><strong>Koliko se izvještaji koriste i izvoze?</strong></td><td>Product analitici</td><td>Ako se podaci često izvoze ili traže drugdje, izvještaj ne daje sliku koju manager treba.</td></tr>
-            <tr><td><strong>Koji podaci postoje i kako su ažurni ujutro?</strong></td><td>Developerima</td><td>Da ne predlažem nešto što se ne može pouzdano izračunati.</td></tr>
-          </tbody>
-        </table>
+      <div class="card qcard">
+        <span class="lbl">Prva pitanja</span>
+        <p class="qintro">Prije razgovora s managerima prvo bih interno skupila ono što mi fali u briefu, da znam od čega krećem:</p>
+        <ul class="qlist">
+          <li><b>Je li dashboard dio revampa izvještaja ili zaseban početni ekran?</b><span>Osobi koja je dala brief</span></li>
+          <li><b>Mogu li vidjeti trenutne izvještaje?</b><span>Osobi koja je dala brief</span></li>
+          <li><b>Tko se žalio i kojim riječima?</b><span>Korisničkoj podršci</span></li>
+          <li><b>Koliko se izvještaji koriste i izvoze?</b><span>Product analitici</span></li>
+          <li><b>Koji podaci postoje i koliko su ažurni ujutro?</b><span>Developerima</span></li>
+          <li><b>Je li netko već istraživao ovaj problem ili ima planova za izvještaje?</b><span>Product timu</span></li>
+        </ul>
       </div>
 
     </div>
@@ -446,13 +496,13 @@
       <div class="interview">
         <div class="card"><span class="lbl">Promatranje, 15 min</span><p>Manager radi svoje jutro, a ja bilježim što otvara, kojim redom i gdje zapinje.</p></div>
         <div class="card"><span class="lbl">Razgovor, 20 min</span>
-          <ul><li>Što si jutros prvo pogledao?</li><li>Što, ako propustiš, stvori najveći problem?</li><li>Kako znaš je li brojka dobra ili loša?</li><li>Na što misliš kad kažeš "sporo"?</li></ul>
+          <ul><li>Što si jutros prvo pogledao?</li><li>Što, ako propustiš, stvori najveći problem?</li><li>Koju odluku donosiš na temelju jutarnjih brojki?</li><li>Kako znaš je li brojka dobra ili loša?</li><li>Što provjeravaš u drugim alatima ili Excelu?</li><li>Kome i kako javljaš rezultate?</li><li>Na što misliš kad kažeš "sporo"?</li></ul>
         </div>
-        <div class="card"><span class="lbl">Sortiranje kartica, 10 min</span><p>Podaci se slažu po posljedici i učestalosti.</p>
-          <div class="mx" role="img" aria-label="Matrica posljedice i učestalosti">
-            <div></div><div class="mx-h">Svaki dan</div><div class="mx-h">Povremeno</div>
-            <div class="mx-v">Velika posljedica</div><div class="mx-c mx-key">Prvi ekran</div><div class="mx-c">Upozorenje</div>
-            <div class="mx-v">Mala posljedica</div><div class="mx-c">Pregled</div><div class="mx-c mx-dim">Puni izvještaj</div>
+        <div class="card"><span class="lbl">Sortiranje kartica, 10 min</span><p>Manager slaže kartice s podacima prema tome koliko je loše ako ih propusti i koliko ih često gleda.</p>
+          <div class="mx2" role="img" aria-label="Matrica posljedice i učestalosti">
+            <span></span><span class="mh">Često</span><span class="mh">Rijetko</span>
+            <span class="mv">Velika posljedica</span><span class="mc key">Prvi ekran</span><span class="mc">Upozorenje</span>
+            <span class="mv">Mala posljedica</span><span class="mc">Pregled</span><span class="mc dim">Puni izvještaj</span>
           </div>
         </div>
       </div>
@@ -489,24 +539,12 @@
             <div><b>Danas</b><span>zauzete sobe, dolasci i odlasci</span></div>
             <div><b>Idućih 14 dana</b><span>kako se puni i gdje zaostaje</span></div>
           </div>
+
         </div>
       </div>
-      <div class="pextra">
-        <div class="pwatch">
-          <h4>Na što paziti</h4>
-          <p class="psub">Ako ovo ne poštujemo, novi izvještaj postaje samo još jedan ekran.</p>
-          <div class="wgrid">
-            <div class="witem"><b>Previše upozorenja</b><span>Ako sve crveni, ništa nije važno. Stavki mora biti malo.</span></div>
-            <div class="witem"><b>Netočan zaključak</b><span>Jedna kriva oznaka o novcu ruši povjerenje u cijeli izvještaj.</span></div>
-            <div class="witem"><b>Usporedba bez sezonskog konteksta</b><span>Uspoređuje se s istim danom lani, a ne s prošlim tjednom.</span></div>
-            <div class="witem"><b>Skrivene brojke</b><span>Detalji moraju biti jedan klik daleko, inače se vraća starom izvještaju.</span></div>
-          </div>
-        </div>
-        <div class="pside-p">
-          <h4>Uz Mariju</h4>
-          <div class="sp"><span class="sp-lbl">Provjera jednostavnosti</span><b>Ivan, vlasnik malog hotela</b><span>Sve radi sam, uglavnom s mobitela. Ako on nešto ne razumije u nekoliko sekundi, rješenje je presloženo.</span></div>
-          <div class="sp"><span class="sp-lbl">Anti-persona</span><b>Analitičar koji treba sve detalje</b><span>Za njega ostaju puni izvještaji, zato ne redizajniram sve, nego jutarnji ulaz u njih.</span></div>
-        </div>
+      <div class="grid g2 sidep">
+        <div class="card"><span class="lbl">Provjera jednostavnosti</span><h4>Ivan, vlasnik malog hotela</h4><p>Sve radi sam, uglavnom s mobitela. Ako on nešto ne razumije u nekoliko sekundi, rješenje je presloženo.</p></div>
+        <div class="card"><span class="lbl">Anti-persona</span><h4>Analitičar koji treba sve detalje</h4><p>Za njega ostaju puni izvještaji, zato ne redizajniram sve, nego jutarnji ulaz u njih.</p></div>
       </div>
     </div>
   </section>
@@ -516,7 +554,7 @@
     <div class="wrap">
       <div class="head">
         <div><span class="eyebrow">Koncept i prototip</span><h2 id="prototip-h">Jutarnji izvještaj koji sam čita brojke</h2></div>
-        <p>Hoteli obično imaju dnevni izvještaj za managera: sažetak soba, prihoda i rezervacija u odnosu na isti dan lani. Brojke su tu, ali tumačenje je na manageru. Moj prijedlog zadržava te brojke i dodaje razinu iznad: ocjenu, posljedicu i sljedeći korak. Odaberi scenarij i prijeđi mišem preko dijelova ekrana.</p>
+        <p>Rješenje ne traži nove podatke. Iste podatke o rezervacijama, prihodima i gostima jednostavna pravila pretvaraju u ocjenu, posljedicu i sljedeći korak. Baza ostaje ista, mijenja se samo prikaz. Odaberi scenarij i prijeđi mišem preko ekrana.</p>
       </div>
       <div class="pgrid">
         <div class="stage" id="stage">
@@ -527,7 +565,7 @@
           <h4>Scenarij</h4>
           <div class="scn" role="group" aria-label="Scenarij">
             <button data-scn="bad" aria-pressed="false"><i class="sw" style="background:var(--bad)"></i><span><strong>Alarmantan dan</strong><em>Četiri stavke traže reakciju</em></span></button>
-            <button data-scn="normal" aria-pressed="true"><i class="sw" style="background:var(--warn)"></i><span><strong>Uobičajen dan</strong><em>Jedna prilika za višu cijenu</em></span></button>
+            <button data-scn="normal" aria-pressed="true"><i class="sw" style="background:var(--warn)"></i><span><strong>Uobičajen dan</strong><em>Opterećen dan i prilika za cijenu</em></span></button>
             <button data-scn="good" aria-pressed="false"><i class="sw" style="background:var(--ok)"></i><span><strong>Sve u redu</strong><em>Ništa ne traži reakciju</em></span></button>
           </div>
           <p class="hint">Prijeđi mišem preko dijelova ekrana za kratko objašnjenje.</p>
@@ -535,16 +573,18 @@
         </aside>
       </div>
 
-      <div class="sub-h"><h3>Hijerarhija ekrana</h3><p>Od odgovora prema detaljima.</p></div>
-      <ol class="hier">
-        <li><h4>Tri glavna widgeta</h4><p>Jučer, danas i idućih 14 dana, svaki s ocjenom. Ako Marija pogleda samo njih, mora joj biti jasno kako stvari stoje.</p></li>
-        <li><h4>Traži tvoju pažnju</h4><p>Što odstupa, koliko to vrijedi i što napraviti. Prvo današnji dan i gosti, zatim rizik za prihod, pa prilike.</p></li>
-        <li><h4>Brojke</h4><p>Podloga za sve iznad, za one koji žele sami provjeriti, i dalje uz jasan signal je li stanje u redu.</p></li>
-        <li><h4>Prognoza</h4><p>Idućih 7, 14 ili 30 dana u odnosu na lani. Tu Marija još može utjecati na rezultat.</p></li>
-        <li><h4>Detaljni izvještaji</h4><p>Uvijek dostupni jednim klikom iz zaglavlja.</p></li>
-      </ol>
+      <div class="sub-h"><h3>Hijerarhija ekrana</h3></div>
+      <div class="hier2">
+        <div class="hrow hhead"><span></span><span>Dio ekrana</span><span>Vrijednost za Mariju</span><span>Po čemu znamo da radi</span></div>
+        <div class="hrow"><span class="hn">1</span><b>Tri glavna widgeta</b><span>U nekoliko sekundi zna kako stvari stoje: jučer, danas i idućih 14 dana.</span><span>U testu manager točno kaže kako stoji jučer, danas i idućih 14 dana, i to brže nego sa starim izvještajem.</span></div>
+        <div class="hrow"><span class="hn">2</span><b>Traži tvoju pažnju</b><span>Ne mora sama tražiti probleme: dobije što odstupa, koliko vrijedi i što napraviti.</span><span>Nakon stavke manager isti dan otvori predloženi korak. Stavke koje se stalno ignoriraju znače loše pravilo.</span></div>
+        <div class="hrow"><span class="hn">3</span><b>Brojke</b><span>Može provjeriti svaki zaključak, uz jasan signal je li stanje u redu.</span><span>Manageri rjeđe otvaraju druge izvještaje ili izvoze podatke da bi provjerili brojke.</span></div>
+        <div class="hrow"><span class="hn">4</span><b>Prognoza</b><span>Na vrijeme vidi slabije dane i može reagirati cijenom ili ponudom.</span><span>Cijene ili ponudu za dane koji zaostaju manager mijenja ranije nego prije, dok još ima vremena.</span></div>
+        <div class="hrow"><span class="hn">5</span><b>Detaljni izvještaji</b><span>Dubinska analiza kad je treba, jednim klikom iz zaglavlja.</span><span>Puni izvještaji se otvaraju iz stavke ili prognoze, a ne kao prvi korak svako jutro.</span></div>
+      </div>
 
-      <div class="sub-h"><h3>Kako bi developeri pripremili stavke</h3><p>Svaka stavka nastaje iz jednostavnog pravila i ima isti predložak, pa se mijenjaju samo brojke. Pravila se računaju jednom noću iz rezervacija i povijesti za usporedbu s lani, a pragove bih odredila iz podataka, relativno i prilagođeno objektu. Pravila, a ne AI, jer kod poslovnih brojki jedna netočna rečenica ruši povjerenje.</p></div>
+      <div class="sub-h"><h3>Kako bi developeri pripremili stavke</h3><p>Iza svake stavke stoji jedno pravilo, a sve stavke dijele isti predložak, pa se mijenjaju samo brojke i tekst gumba. Sustav pravila provjerava jednom noću, nakon zatvaranja dana, na podacima o rezervacijama i istom razdoblju prošle godine. Pragove ne bih određivala napamet, nego iz povijesnih podataka i relativno, da vrijede i za mali apartman i za veliki hotel.</p></div>
+      <div class="why-m"><b>Zašto ta odluka:</b> Marija stavke brzo nauči prepoznati jer uvijek izgledaju isto, a zna i zašto se nešto pojavilo, pa im može vjerovati. Developeri i QA dobivaju jednostavniju i točniju implementaciju: znaju točno što se računa i svako pravilo mogu provjeriti na granici praga, bez nepredvidljivih odgovora. Kod brojki o novcu to je ključno, jer izvještaj mora biti pouzdan bez iznimke.</div>
       <div class="rule-ex">
         <div class="card">
           <span class="lbl">Primjer pravila</span>
@@ -553,7 +593,7 @@
             <div><dt>Uvjet</dt><dd>Popunjenost za idućih 7 do 14 dana je X % niža nego lani u isto vrijeme</dd></div>
             <div><dt>Na kartici</dt><dd>Popunjenost za taj tjedan i vrijednost od lani</dd></div>
             <div><dt>Procjena</dt><dd>Koliko prihoda manje nego lani</dd></div>
-            <div><dt>Gumb</dt><dd><span class="btnlike">Pregledaj cijene</span> vodi na kalendar cijena za te datume</dd></div>
+            <div><dt>Gumb</dt><dd><span class="btnlike">Pregledaj cijene</span> <span class="inote">(vodi na kalendar cijena za te datume)</span></dd></div>
           </dl>
         </div>
         <div class="card">
@@ -565,7 +605,7 @@
             <li><span class="chip bad">Rizik za prihod</span> Više otkazivanja nego obično</li>
             <li><span class="chip opp">Prilika</span> Datum je gotovo pun, a cijena je niža nego lani</li>
           </ul>
-          <p class="small muted" style="margin:14px 0 0">Koja pravila i s kojim pragovima, odlučila bih nakon razgovora s managerima.</p>
+          <p class="small muted" style="margin:14px 0 0">Koja pravila i s kojim pragovima, odlučila bih nakon razgovora s managerima i developerima.</p>
         </div>
       </div>
     </div>
@@ -576,7 +616,7 @@
     <div class="wrap">
       <div class="head">
         <div><span class="eyebrow">Metrike</span><h2 id="metrike-h">Kako znam da radi</h2></div>
-        <p>Mjerim ponašanje i ishod, ne zadovoljstvo. Na početku bih izmjerila i vrijeme učitavanja i vrijeme do odgovora, a ciljeve postavila nakon toga.</p>
+        <p>Uspjeh ne mjerim zadovoljstvom, nego time mijenja li se ono što manager radi: koliko brzo dolazi do zaključka, reagira li na ono što mu izvještaj pokaže i treba li mu još uvijek nešto drugo. Prije izrade bih izmjerila kako je danas, i vrijeme učitavanja i vrijeme do odgovora, da nakon redizajna imam s čime usporediti. Ciljane vrijednosti postavila bih tek kad znam polazno stanje.</p>
       </div>
       <div class="grid g3 mgrid">
         <div class="mcard main"><span class="mtag">Glavna metrika</span><h4>Vrijeme do odgovora</h4><p>Koliko treba manageru da kaže kako stvari stoje i treba li nešto napraviti.</p><span class="how">Test s managerima, prije i poslije</span></div>
