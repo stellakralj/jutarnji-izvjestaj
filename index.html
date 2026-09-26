@@ -374,6 +374,17 @@
   .nav ul a { padding:6px 2px; border-bottom:2px solid transparent; transition:color .15s, border-color .15s; }
   .nav ul a:hover { border-bottom-color:var(--accent); }
   @media (max-width:1100px) { .nav ul { gap:22px !important; } }
+
+  .wtpl { margin-bottom:20px; }
+  .wtpl > p { margin:4px 0 14px !important; color:var(--ink) !important; }
+  .tpl { list-style:none; margin:0; padding:0; counter-reset:t; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px 24px; }
+  .tpl li { counter-increment:t; padding:10px 0 0 30px; border-top:1px solid var(--line); position:relative; font-size:14px; }
+  .tpl li::before { content:counter(t); position:absolute; left:0; top:10px; width:20px; height:20px; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-size:12px; font-weight:700; display:grid; place-items:center; }
+  .tpl b { display:block; font-weight:600; }
+  .tpl span { color:var(--muted); font-size:13px; }
+  @media (max-width:980px) { .tpl { grid-template-columns:minmax(0,1fr); } }
+
+  .tpl.one { grid-template-columns:minmax(0,1fr) !important; }
 </style>
 </head>
 <body>
@@ -409,7 +420,7 @@
         </dl>
       </div>
       <div class="preview">
-        <img src="assets/img/preview-2.jpg" alt="Prototip jutarnjeg izvještaja: tri glavna widgeta, stavka koja traži pažnju i brojke u odnosu na lani">
+        <img src="assets/img/preview-7.jpg" alt="Prototip jutarnjeg izvještaja: tri glavna widgeta, preporučene akcije i brojke u odnosu na lani">
       </div>
     </div>
   </header>
@@ -564,7 +575,7 @@
         <aside class="pside" aria-label="Scenariji prototipa">
           <h4>Scenarij</h4>
           <div class="scn" role="group" aria-label="Scenarij">
-            <button data-scn="bad" aria-pressed="false"><i class="sw" style="background:var(--bad)"></i><span><strong>Alarmantan dan</strong><em>Četiri stavke traže reakciju</em></span></button>
+            <button data-scn="bad" aria-pressed="false"><i class="sw" style="background:var(--bad)"></i><span><strong>Alarmantan dan</strong><em>Četiri preporučene akcije</em></span></button>
             <button data-scn="normal" aria-pressed="true"><i class="sw" style="background:var(--warn)"></i><span><strong>Uobičajen dan</strong><em>Opterećen dan i prilika za cijenu</em></span></button>
             <button data-scn="good" aria-pressed="false"><i class="sw" style="background:var(--ok)"></i><span><strong>Sve u redu</strong><em>Ništa ne traži reakciju</em></span></button>
           </div>
@@ -576,37 +587,46 @@
       <div class="sub-h"><h3>Hijerarhija ekrana</h3></div>
       <div class="hier2">
         <div class="hrow hhead"><span></span><span>Dio ekrana</span><span>Vrijednost za Mariju</span><span>Po čemu znamo da radi</span></div>
-        <div class="hrow"><span class="hn">1</span><b>Tri glavna widgeta</b><span>U nekoliko sekundi zna kako stvari stoje: jučer, danas i idućih 14 dana.</span><span>U testu manager točno kaže kako stoji jučer, danas i idućih 14 dana, i to brže nego sa starim izvještajem.</span></div>
-        <div class="hrow"><span class="hn">2</span><b>Traži tvoju pažnju</b><span>Ne mora sama tražiti probleme: dobije što odstupa, koliko vrijedi i što napraviti.</span><span>Nakon stavke manager isti dan otvori predloženi korak. Stavke koje se stalno ignoriraju znače loše pravilo.</span></div>
-        <div class="hrow"><span class="hn">3</span><b>Brojke</b><span>Može provjeriti svaki zaključak, uz jasan signal je li stanje u redu.</span><span>Manageri rjeđe otvaraju druge izvještaje ili izvoze podatke da bi provjerili brojke.</span></div>
-        <div class="hrow"><span class="hn">4</span><b>Prognoza</b><span>Na vrijeme vidi slabije dane i može reagirati cijenom ili ponudom.</span><span>Cijene ili ponudu za dane koji zaostaju manager mijenja ranije nego prije, dok još ima vremena.</span></div>
-        <div class="hrow"><span class="hn">5</span><b>Detaljni izvještaji</b><span>Dubinska analiza kad je treba, jednim klikom iz zaglavlja.</span><span>Puni izvještaji se otvaraju iz stavke ili prognoze, a ne kao prvi korak svako jutro.</span></div>
+        <div class="hrow"><span class="hn">1</span><b>Stanje: tri widgeta</b><span>Čim otvori izvještaj u 7 ujutro, zna je li sve u redu: jučer, danas i idućih 14 dana, svaki s jasnim stanjem.</span><span>U testu manager u nekoliko sekundi točno kaže kako stoji, brže nego sa starim izvještajem.</span></div>
+        <div class="hrow"><span class="hn">2</span><b>Preporučene akcije</b><span>Zna što može napraviti, zašto i što se dogodi ako ne napravi. Prvo današnji dan, zatim rizik za prihod, pa prilike.</span><span>Nakon akcije manager isti dan otvori predloženo mjesto. Akcije koje se stalno ignoriraju znače loše pravilo.</span></div>
+        <div class="hrow"><span class="hn">3</span><b>Brojke</b><span>Može provjeriti na čemu se temelje stanje i akcije.</span><span>Manageri rjeđe otvaraju druge izvještaje ili izvoze podatke da bi provjerili brojke.</span></div>
+        <div class="hrow"><span class="hn">4</span><b>Prognoza</b><span>Vidi po danima gdje zaostaje za lani, dok još može reagirati.</span><span>Cijene ili ponudu za slabije dane manager mijenja ranije nego prije.</span></div>
+        <div class="hrow"><span class="hn">5</span><b>Detaljni izvještaji</b><span>Dubinska analiza kad je treba, jednim klikom iz zaglavlja.</span><span>Otvaraju se ciljano, a ne kao prvi korak svako jutro.</span></div>
       </div>
 
-      <div class="sub-h"><h3>Kako bi developeri pripremili stavke</h3><p>Iza svake stavke stoji jedno pravilo, a sve stavke dijele isti predložak, pa se mijenjaju samo brojke i tekst gumba. Sustav pravila provjerava jednom noću, nakon zatvaranja dana, na podacima o rezervacijama i istom razdoblju prošle godine. Pragove ne bih određivala napamet, nego iz povijesnih podataka i relativno, da vrijede i za mali apartman i za veliki hotel.</p></div>
-      <div class="why-m"><b>Zašto ta odluka:</b> Marija stavke brzo nauči prepoznati jer uvijek izgledaju isto, a zna i zašto se nešto pojavilo, pa im može vjerovati. Developeri i QA dobivaju jednostavniju i točniju implementaciju: znaju točno što se računa i svako pravilo mogu provjeriti na granici praga, bez nepredvidljivih odgovora. Kod brojki o novcu to je ključno, jer izvještaj mora biti pouzdan bez iznimke.</div>
-      <div class="rule-ex">
-        <div class="card">
-          <span class="lbl">Primjer pravila</span>
-          <h3>Idući dani zaostaju</h3>
-          <dl class="ex">
-            <div><dt>Uvjet</dt><dd>Popunjenost za idućih 7 do 14 dana je X % niža nego lani u isto vrijeme</dd></div>
-            <div><dt>Na kartici</dt><dd>Popunjenost za taj tjedan i vrijednost od lani</dd></div>
-            <div><dt>Procjena</dt><dd>Koliko prihoda manje nego lani</dd></div>
-            <div><dt>Gumb</dt><dd><span class="btnlike">Pregledaj cijene</span> <span class="inote">(vodi na kalendar cijena za te datume)</span></dd></div>
-          </dl>
+      <div class="sub-h"><h3>Kako bi developeri pripremili widgete i akcije</h3><p>Oba reda imaju fiksni predložak, pa se mijenjaju samo brojke. Stanja i akcije računaju se jednom noću, nakon zatvaranja dana, iz rezervacija i istog razdoblja prošle godine. Pragove bih odredila iz povijesnih podataka i relativno, da vrijede i za mali apartman i za veliki hotel.</p></div>
+      <div class="grid g2">
+        <div class="card wtpl">
+          <span class="lbl">Predložak widgeta stanja</span>
+          <ol class="tpl one">
+            <li><b>Oznaka razdoblja</b><span>jučer, danas ili idućih 14 dana</span></li>
+            <li><b>Glavna brojka i jedinica</b><span>prihod, zauzete sobe ili popunjenost</span></li>
+            <li><b>Vrijednost od lani</b><span>uvijek na istom mjestu</span></li>
+            <li><b>Stanje</b><span>jedno od unaprijed definiranih, prema pragu: bolje, slično ili slabije nego lani; za danas uobičajen dan ili više dolazaka, odlazaka ili oboje</span></li>
+          </ol>
         </div>
-        <div class="card">
-          <span class="lbl">Ideje za pravila</span>
-          <ul class="ideas">
-            <li><span class="chip warn">Danas</span> Neobično puno dolazaka ili odlazaka</li>
-            <li><span class="chip warn">Danas</span> Dolasci bez plaćenog depozita</li>
-            <li><span class="chip bad">Rizik za prihod</span> Idući dani zaostaju za lani</li>
-            <li><span class="chip bad">Rizik za prihod</span> Više otkazivanja nego obično</li>
-            <li><span class="chip opp">Prilika</span> Datum je gotovo pun, a cijena je niža nego lani</li>
-          </ul>
-          <p class="small muted" style="margin:14px 0 0">Koja pravila i s kojim pragovima, odlučila bih nakon razgovora s managerima i developerima.</p>
+        <div class="card wtpl">
+          <span class="lbl">Predložak akcije</span>
+          <ol class="tpl one">
+            <li><b>Kategorija</b><span>danas, rizik za prihod ili prilika</span></li>
+            <li><b>Akcija</b><span>što napraviti, fiksan tekst za svako pravilo, npr. "Pregledaj cijene za idući tjedan"</span></li>
+            <li><b>Zašto</b><span>jedna metrika uz usporedbu "lani" ili "obično"</span></li>
+            <li><b>Ako ne napraviš</b><span>u jednom od dva oblika: oko X € manje prihoda ili X soba više nego obično možda neće biti spremno</span></li>
+            <li><b>Jedan gumb</b><span>fiksan tekst i odredište za svako pravilo</span></li>
+          </ol>
         </div>
+      </div>
+      <div class="why-m" style="margin-top:20px"><b>Rubni slučajevi:</b> najviše jedna akcija po pravilu, bez akcije kad nema podataka za usporedbu, a redoslijed je po kategoriji pa po veličini posljedice. <b>Zašto ta odluka:</b> Marija brzo nauči čitati ekran jer uvijek izgleda isto i zna zašto se nešto pojavilo, a developeri i QA dobivaju jednostavnu i točnu implementaciju, jer svako stanje i pravilo mogu provjeriti na granici praga. Kod brojki o novcu izvještaj mora biti pouzdan bez iznimke.</div>
+      <div class="card" style="margin-top:20px">
+        <span class="lbl">Ideje za pravila akcija</span>
+        <ul class="ideas">
+          <li><span class="chip warn">Danas</span> Rasporedi tim kad je neobično puno dolazaka ili odlazaka</li>
+          <li><span class="chip warn">Danas</span> Javi se gostima koji dolaze bez plaćenog depozita</li>
+          <li><span class="chip bad">Rizik za prihod</span> Pregledaj cijene kad idući dani zaostaju za lani</li>
+          <li><span class="chip bad">Rizik za prihod</span> Provjeri otkazane rezervacije kad ih je više nego obično</li>
+          <li><span class="chip opp">Prilika</span> Podigni cijenu kad je datum gotovo pun, a cijena niža nego lani</li>
+        </ul>
+        <p class="small muted" style="margin:14px 0 0">Koja pravila i s kojim pragovima, odlučila bih nakon razgovora s managerima i developerima.</p>
       </div>
     </div>
   </section>
@@ -620,12 +640,12 @@
       </div>
       <div class="grid g3 mgrid">
         <div class="mcard main"><span class="mtag">Glavna metrika</span><h4>Vrijeme do odgovora</h4><p>Koliko treba manageru da kaže kako stvari stoje i treba li nešto napraviti.</p><span class="how">Test s managerima, prije i poslije</span></div>
-        <div class="mcard"><span class="mtag">Ponašanje</span><h4>Reakcija na stavke</h4><p>Udio stavki nakon kojih manager isti dan otvori predloženi korak.</p><span class="how">Analitika klikova na gumbe</span></div>
+        <div class="mcard"><span class="mtag">Ponašanje</span><h4>Reakcija na akcije</h4><p>Udio preporučenih akcija nakon kojih manager isti dan otvori predloženo mjesto.</p><span class="how">Analitika klikova na gumbe</span></div>
         <div class="mcard"><span class="mtag">Navika</span><h4>Manje traženja drugdje</h4><p>Za dnevnu sliku manageri rjeđe otvaraju druge izvještaje, izvoze ili alate.</p><span class="how">Analitika korištenja izvještaja</span></div>
       </div>
       <div class="sigbox">
-        <div class="good"><h4><span aria-hidden="true">✓</span> Signali da radi</h4><ul><li>Jutarnji izvještaj se otvara svaki dan, prije drugih izvještaja.</li><li>U testu manageri bez pomoći kažu što je dobro, a što ne.</li><li>Na stavke se reagira.</li></ul></div>
-        <div class="bad"><h4><span aria-hidden="true">!</span> Signali da ne radi</h4><ul><li>Stavke se ignoriraju, pa su pravila preosjetljiva.</li><li>Manageri i dalje prvo otvaraju druge izvještaje ili alate.</li><li>Raste broj pitanja podršci o značenju brojki.</li></ul></div>
+        <div class="good"><h4><span aria-hidden="true">✓</span> Signali da radi</h4><ul><li>Jutarnji izvještaj se otvara svaki dan, prije drugih izvještaja.</li><li>U testu manageri bez pomoći kažu što je dobro, a što ne.</li><li>Na preporučene akcije se reagira.</li></ul></div>
+        <div class="bad"><h4><span aria-hidden="true">!</span> Signali da ne radi</h4><ul><li>Akcije se ignoriraju, pa su pravila preosjetljiva.</li><li>Manageri i dalje prvo otvaraju druge izvještaje ili alate.</li><li>Raste broj pitanja podršci o značenju brojki.</li></ul></div>
       </div>
     </div>
   </section>
@@ -639,7 +659,7 @@
       </div>
       <div class="grid g3">
         <div class="card scope-col"><h3>Jutarnji izvještaj <span class="pill mvp">MVP</span></h3><ul><li>Tri widgeta s ocjenom</li><li>Nekoliko pravila s pragovima prilagođenima objektu</li><li>Brojke u odnosu na lani</li><li>Prognoza na 7, 14 i 30 dana</li><li>Mobilni prikaz</li></ul></div>
-        <div class="card scope-col"><h3>Dolazi k tebi <span class="pill">Faza 2</span></h3><ul><li>Email u 7:00</li><li>Dijeljenje s timom</li><li>Obavijest kad se pojavi važna stavka</li></ul></div>
+        <div class="card scope-col"><h3>Dolazi k tebi <span class="pill">Faza 2</span></h3><ul><li>Email u 7:00</li><li>Dijeljenje s timom</li><li>Obavijest kad se pojavi važna akcija</li></ul></div>
         <div class="card scope-col"><h3>Svjesno čeka <span class="pill">Kasnije</span></h3><ul><li>Manager sam podešava pragove</li><li>AI formulacija i pitanja</li><li>Ostali izvještaji</li></ul></div>
       </div>
       <div class="grid g3 decisions" style="margin-top:20px">
@@ -661,11 +681,11 @@
 <script>
   const NOTES = {
     hdr: ['Zaglavlje', 'Datum i trenutak stanja, da manager zna koliko su brojke svježe. Detaljni izvještaji su uvijek na dohvat, gore desno.'],
-    w1: ['Jučer', 'Prihod od smještaja u odnosu na isti dan lani, uz popunjenost i ADR. Tri stanja prema pragu: bolje, slično ili slabije nego lani.'],
-    w2: ['Danas', 'Zauzete sobe večeras, dolasci, odlasci i boravci. Opterećen dan kad je dolazaka ili odlazaka znatno više od prosjeka tog dana u tjednu. Služi za raspored tima.'],
-    w3: ['Idućih 14 dana', 'Popunjenost na knjigama u odnosu na isti trenutak lani. Jedino mjesto gdje manager još može utjecati na rezultat, npr. cijenama.'],
-    attn: ['Traži tvoju pažnju', 'Stavke iz jednostavnih pravila, sve u istom predlošku: metrika uz usporedbu, procjena i jedan korak. Prvo današnji dan, zatim rizik za prihod, pa prilike.'],
-    kpis: ['Brojke', 'Klasične brojke managerskog izvještaja za jučer, 7 dana ili mjesec, u odnosu na lani. Na njima se temelje widgeti i stavke, pa se svaki zaključak može provjeriti.'],
+    w1: ['Jučer', 'Signal stanja: prihod od smještaja u odnosu na isti dan lani. Tri stanja: bolje, slično ili slabije nego lani.'],
+    w2: ['Danas', 'Signal stanja: zauzete sobe večeras u odnosu na lani. Stanje kaže je li dan uobičajen ili ima više dolazaka ili odlazaka nego obično.'],
+    w3: ['Idućih 14 dana', 'Signal stanja: popunjenost na knjigama u odnosu na isti trenutak lani. Tri stanja: bolje, slično ili slabije nego lani.'],
+    attn: ['Preporučene akcije', 'Što Marija može napraviti, zašto i što se dogodi ako ne napravi. Sve akcije imaju isti predložak, a poredane su po kategoriji: danas, rizik za prihod, prilika.'],
+    kpis: ['Brojke', 'Klasične brojke managerskog izvještaja za jučer, 7 dana ili mjesec, u odnosu na lani. Na njima se temelje stanje i akcije, pa se svaki zaključak može provjeriti.'],
     books: ['Rezervacije', 'Nove rezervacije, otkazivanja i no-show u odnosu na lani. Rani znak promjene potražnje, prije nego što se vidi u popunjenosti.'],
     fc: ['Prognoza', 'Popunjenost na knjigama po danu u odnosu na lani. Boja pokazuje dane znatno ispod, približno kao ili iznad lani te priliku za cijenu.'],
     det: ['Detalj dana', 'Popunjenost, ADR i prihod na knjigama za odabrani dan, uz usporedbu s lani.']
