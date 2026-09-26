@@ -279,6 +279,32 @@
   .sigbox ul { margin:0; padding-left:18px; color:var(--muted); font-size:15px; }
   .sigbox li { margin-bottom:6px; }
   @media (max-width:980px) { .sigbox { grid-template-columns:minmax(0,1fr); } .sigbox > div + div { border-left:0; border-top:1px solid var(--line); } }
+
+  .pcard { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr); background:var(--paper); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+  .pleft { background:var(--navy); color:#fff; padding:30px 28px; }
+  .pleft .avatar { background:rgba(255,255,255,.12); color:#fff; margin-bottom:16px; }
+  .pleft .hyp { color:#D2DEE9; border-color:rgba(255,255,255,.25); }
+  .pleft h3 { font-size:24px; margin:6px 0 4px; }
+  .pleft .muted { color:#D2DEE9; }
+  .pquote { font-size:18px; font-weight:600; line-height:1.4; margin:22px 0 0; padding-top:18px; border-top:1px solid rgba(255,255,255,.2); color:#fff; }
+  .pright { padding:28px 32px; }
+  .plead { font-size:17px; margin:0 0 20px; }
+  .pright h4 { font-size:13px; color:var(--accent); font-weight:600; margin:0 0 10px; }
+  .pgoals { list-style:none; margin:0 0 22px; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 20px; font-size:15px; }
+  .pgoals li { padding-left:22px; position:relative; }
+  .pgoals li::before { content:"✓"; position:absolute; left:0; color:var(--ok); font-weight:700; }
+  .pglance { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+  .pglance div { background:var(--tint); border-radius:10px; padding:12px 14px; }
+  .pglance b { display:block; font-weight:600; font-size:15px; }
+  .pglance span { font-size:13px; color:var(--muted); }
+  .pnote { font-size:15px; color:var(--muted); margin-top:18px; max-width:none; }
+  .pnote b { color:var(--ink); font-weight:600; }
+  @media (max-width:980px) { .pcard, .pglance, .pgoals { grid-template-columns:minmax(0,1fr); } }
+
+  section.slim { padding:44px 0; border-bottom:1px solid var(--line); }
+  .disclaimer { border-left:4px solid var(--accent); background:var(--tint); padding:18px 24px; border-radius:0 12px 12px 0; }
+  .disclaimer p { margin:0; max-width:none; color:var(--ink); }
+  .hypo + .sub-h { margin-top:44px; }
 </style>
 </head>
 <body>
@@ -287,13 +313,12 @@
   <div class="wrap">
     <a class="brand" href="#top"><i aria-hidden="true"></i>Jutarnji izvještaj</a>
     <ul>
-      <li><a href="#polaziste">Polazište</a></li>
+      <li><a href="#hipoteza">Hipoteza</a></li>
       <li><a href="#pristup">Pristup</a></li>
       <li><a href="#persona">Persona</a></li>
-      <li><a href="#koncept">Koncept</a></li>
-      <li><a href="#scope">Scope</a></li>
-      <li><a href="#metrike">Metrike</a></li>
       <li><a href="#prototip">Prototip</a></li>
+      <li><a href="#metrike">Metrike</a></li>
+      <li><a href="#scope">Scope</a></li>
     </ul>
   </div>
 </nav>
@@ -323,15 +348,11 @@
   </header>
 
   <!-- POLAZISTE -->
-  <section class="block" id="polaziste" aria-labelledby="polaziste-h">
+  <section class="slim" id="polaziste" aria-label="Polazište">
     <div class="wrap">
-      <div class="head">
-        <div><span class="eyebrow">Polazište</span><h2 id="polaziste-h">Jedna rečenica konteksta</h2></div>
-        <p>Manageri hotela kažu da su izvještaji spori i ne daju im sliku koju trebaju. Prije početka pogledala sam javne upute Rentlija: podataka i izvještaja ima puno, a uz njih i upute kako ih čitati. Tumačenje je, čini se, na korisniku.</p>
-      </div>
-      <div class="grid g2">
-        <div class="card dark"><span class="lbl">Gdje povlačim crtu</span><p>Ne znam na koje se izvještaje pritužba odnosi ni kako ih manageri koriste, pa ne redizajniram konkretan ekran. Pokazujem pristup i koncept na izmišljenim podacima.</p></div>
-        <div class="card"><span class="lbl">Okvir rješenja</span><p>Rješenje je koncept jednog ekrana na izmišljenim podacima, izgrađen na jasno označenim pretpostavkama i proto-personi. U stvarnom projektu prvi korak bili bi razgovori s managerima, i taj plan je opisan ispod.</p></div>
+      <div class="disclaimer">
+        <span class="lbl">Polazište</span>
+        <p>Brief je jedna rečenica: manageri hotela kažu da su izvještaji spori i ne daju im sliku koju trebaju. Pogledala sam javne upute Rentlija, ali ne znam na koje se izvještaje pritužba odnosi ni kako ih manageri koriste. Zato ne redizajniram konkretan ekran, nego pokazujem pristup i koncept na izmišljenim podacima, uz jasno označene pretpostavke.</p>
       </div>
     </div>
   </section>
@@ -340,8 +361,8 @@
   <section class="block tinted" id="hipoteza" aria-labelledby="hipoteza-h">
     <div class="wrap">
       <div class="head">
-        <div><span class="eyebrow">Problem i hipoteza</span><h2 id="hipoteza-h">Što znači "spori"?</h2></div>
-        <p>Može značiti dvije stvari. Koja je točna, pokazao bi razgovor s managerima. Za ovaj zadatak biram drugu.</p>
+        <div><span class="eyebrow">Problem, hipoteza i pretpostavke</span><h2 id="hipoteza-h">Što znači "spori"?</h2></div>
+        <p>Može značiti dvije stvari. Koja je točna, pokazao bi razgovor s managerima. Za ovaj zadatak biram drugu, a iz nje slijedi hipoteza i pretpostavke na kojima gradim rješenje.</p>
       </div>
       <div class="grid g2 meanings">
         <div class="card"><span class="lbl">Značenje 1</span><h3>Sporo se učitava</h3><p>Uglavnom posao za developere. Izmjerila bih ga na početku, da imamo s čime usporediti.</p></div>
@@ -351,6 +372,19 @@
         <span class="lbl">Hipoteza</span>
         <p class="big">Manageru ne fale brojke, nego brz odgovor na tri pitanja: kako smo prošli jučer, kakav je današnji dan i trebam li nešto napraviti za dane koji dolaze.</p>
       </div>
+      <div class="sub-h"><h3>Pretpostavke na kojima gradim</h3><p>Dok odgovora nema, hipoteza stoji na ovome. Za svaku je jasno kako bih je provjerila i što bi se promijenilo da nije točna.</p></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:26%">Pretpostavka</th><th style="width:26%">Odakle dolazi</th><th style="width:22%">Kako bih provjerila</th><th>Ako nije točna</th></tr></thead>
+          <tbody>
+            <tr><td><strong>"Spori" znači sporo do zaključka</strong></td><td>Pritužba spominje i da izvještaji "ne daju sliku".</td><td>Pitati managere što znači sporo.</td><td>Ako je problem učitavanje, prioritet je tehnička optimizacija.</td></tr>
+            <tr><td><strong>Ujutro želi na jednom mjestu vidjeti jučer, danas i što traži akciju</strong></td><td>Sliku dana slaže iz više izvora, a stalno ga prekidaju.</td><td>Promatranje jutra i sortiranje kartica.</td><td>Mijenja se sadržaj i redoslijed prvog ekrana.</td></tr>
+            <tr><td><strong>Žale se manji i srednji hoteli</strong></td><td>Jedna osoba radi sve, pa za čitanje izvještaja ima najmanje vremena.</td><td>Odgovor podrške na prva pitanja.</td><td>Veliki hoteli s revenue managerom trebaju dublju analizu, a ne sažetak.</td></tr>
+            <tr><td><strong>Ujutro na računalu, preko dana na mobitelu</strong></td><td>Jutarnji pregled radi se za stolom, a dan provodi u hodu.</td><td>Podaci o uređajima.</td><td>Mobilni prikaz postaje glavni, a desktop sporedni.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </section>
 
@@ -358,8 +392,8 @@
   <section class="block" id="pristup" aria-labelledby="pristup-h">
     <div class="wrap">
       <div class="head">
-        <div><span class="eyebrow">Pristup</span><h2 id="pristup-h">Pretpostavke, plan i prva pitanja</h2></div>
-        <p>Kako bih radila u stvarnom projektu: od dopune briefa do testa s managerima. Za ovaj zadatak prva pitanja ostaju otvorena, pa gradim na pretpostavkama.</p>
+        <div><span class="eyebrow">Pristup</span><h2 id="pristup-h">Plan i prva pitanja</h2></div>
+        <p>Kako bih radila u stvarnom projektu: od dopune briefa do testa s managerima.</p>
       </div>
       <ol class="steps">
         <li><h4>Dopuna briefa</h4><p>Prva pitanja</p></li>
@@ -383,18 +417,6 @@
         </table>
       </div>
 
-      <div class="sub-h"><h3>Pretpostavke</h3><p>Dok odgovora nema, gradim na ovome. Za svaku je jasno kako bih je provjerila i što bi se promijenilo da nije točna.</p></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th style="width:26%">Pretpostavka</th><th style="width:26%">Odakle dolazi</th><th style="width:22%">Kako bih provjerila</th><th>Ako nije točna</th></tr></thead>
-          <tbody>
-            <tr><td><strong>"Spori" znači sporo do zaključka</strong></td><td>Pritužba spominje i da izvještaji "ne daju sliku".</td><td>Pitati managere što znači sporo.</td><td>Ako je problem učitavanje, prioritet je tehnička optimizacija.</td></tr>
-            <tr><td><strong>Ujutro želi na jednom mjestu vidjeti jučer, danas i što traži akciju</strong></td><td>Sliku dana slaže iz više izvora, a stalno ga prekidaju.</td><td>Promatranje jutra i sortiranje kartica.</td><td>Mijenja se sadržaj i redoslijed prvog ekrana.</td></tr>
-            <tr><td><strong>Žale se manji i srednji hoteli</strong></td><td>Jedna osoba radi sve, pa za čitanje izvještaja ima najmanje vremena.</td><td>Odgovor podrške na prva pitanja.</td><td>Veliki hoteli s revenue managerom trebaju dublju analizu, a ne sažetak.</td></tr>
-            <tr><td><strong>Ujutro na računalu, preko dana na mobitelu</strong></td><td>Jutarnji pregled radi se za stolom, a dan provodi u hodu.</td><td>Podaci o uređajima.</td><td>Mobilni prikaz postaje glavni, a desktop sporedni.</td></tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   </section>
 
@@ -426,78 +448,71 @@
     <div class="wrap">
       <div class="head">
         <div><span class="eyebrow">Za koga dizajniram</span><h2 id="persona-h">Marija i njezino jutro</h2></div>
-        <p>Proto-persona iz pretpostavki, s ciljevima koje rješenje mora ispuniti i rizicima na koje treba paziti.</p>
+        <p>Proto-persona iz pretpostavki. Na nju se vežu sve odluke na ekranu.</p>
       </div>
-      <div class="persona">
-        <article class="card">
-          <div class="p-top">
-            <div class="avatar" aria-hidden="true">MK</div>
-            <div><span class="hyp">Proto-persona</span><h3>Marija, 41, general manager</h3><p class="muted small" style="margin:0">Sezonski hotel s 50 soba, bez revenue managera</p></div>
-          </div>
-          <div class="p-row"><h4>Jutro</h4><p>U 20 minuta slaže sliku dana prije dogovora s timom, a stalno je prekidaju.</p></div>
-          <div class="p-row"><h4>Frustracija</h4><p>Izvještaji kažu što se dogodilo, a ne što to znači ni što napraviti.</p></div>
-          <p class="quote">"Treba mi da znam kako stojimo i gdje trebam reagirati."</p>
-        </article>
-        <article class="card">
-          <h3>Ciljevi koje rješenje mora ispuniti</h3>
-          <ol class="goals">
-            <li><div><b>U dvije minute znati kako stoji</b><span>Bez više izvještaja i računanja u glavi.</span></div></li>
-            <li><div><b>Na vrijeme vidjeti problem ili priliku</b><span>Dok još može utjecati, npr. na cijene.</span></div></li>
-            <li><div><b>Znati što napraviti</b><span>Svaki signal vodi na sljedeći korak.</span></div></li>
-            <li><div><b>Vjerovati brojkama</b><span>Uvijek je jasno s čime se uspoređuje.</span></div></li>
-          </ol>
-        </article>
-      </div>
-
-      <div class="grid g2" style="margin-top:20px">
-        <div class="card">
-          <h3>Što želi vidjeti na prvi pogled</h3>
-          <div class="glance">
-            <div><h4>Jučer</h4><p>Prihod od smještaja, popunjenost i ADR u odnosu na isti dan lani</p></div>
-            <div><h4>Danas</h4><p>Zauzete sobe večeras, dolasci, odlasci i boravci</p></div>
-            <div><h4>Idućih 14 dana</h4><p>Popunjenost na knjigama u odnosu na lani, te rizici i prilike</p></div>
-          </div>
+      <div class="pcard">
+        <div class="pleft">
+          <div class="avatar" aria-hidden="true">MK</div>
+          <span class="hyp">Proto-persona</span>
+          <h3>Marija, 41</h3>
+          <p class="muted small">General manager sezonskog hotela s 50 soba, bez revenue managera</p>
+          <p class="pquote">"Treba mi da znam kako stojimo i gdje trebam reagirati."</p>
         </div>
-        <div class="card risks-card">
-          <h3>Rizici koji bi pokvarili rješenje</h3>
-          <ul class="risk-mini">
-            <li><b>Previše upozorenja:</b> ako sve crveni, ništa nije važno.</li>
-            <li><b>Netočan zaključak:</b> jedna kriva oznaka ruši povjerenje.</li>
-            <li><b>Pogrešna usporedba:</b> u sezonskom poslu uspoređuje se s istim danom lani.</li>
-            <li><b>Skrivene brojke:</b> detalji moraju biti jedan klik daleko.</li>
+        <div class="pright">
+          <p class="plead">Ujutro u dvadesetak minuta slaže sliku dana prije dogovora s timom, a stalno je prekidaju. Izvještaji joj kažu što se dogodilo, ali ne i što to znači.</p>
+          <h4>Rješenje joj mora omogućiti da</h4>
+          <ul class="pgoals">
+            <li>u dvije minute zna kako stvari stoje</li>
+            <li>na vrijeme vidi problem ili priliku</li>
+            <li>zna što napraviti</li>
+            <li>vjeruje brojkama</li>
           </ul>
+          <h4>Na prvi pogled želi vidjeti</h4>
+          <div class="pglance">
+            <div><b>Jučer</b><span>prihod i popunjenost u odnosu na lani</span></div>
+            <div><b>Danas</b><span>zauzete sobe, dolasci i odlasci</span></div>
+            <div><b>Idućih 14 dana</b><span>kako se puni i gdje zaostaje</span></div>
+          </div>
         </div>
       </div>
-      <div class="grid g2 side-p" style="margin-top:20px">
-        <div class="card"><span class="lbl">Provjera jednostavnosti</span><h4>Ivan, vlasnik obiteljskog hotela sa 16 soba</h4><p>Sve radi sam i uglavnom s mobitela. Ako Ivan nešto ne razumije u prvih nekoliko sekundi, rješenje je presloženo.</p></div>
-        <div class="card"><span class="lbl">Anti-persona</span><h4>Analitičar koji treba sve detalje</h4><p>Treba filtere, segmente i izvoz. Za njega ostaju detaljni izvještaji, zato ne redizajniram sve, nego jutarnji ulaz u njih.</p></div>
-      </div>
+      <p class="pnote"><b>Pazi na:</b> previše upozorenja, netočan zaključak, usporedbu bez sezonskog konteksta i skrivene brojke. <b>Uz Mariju:</b> Ivan, vlasnik malog hotela, provjera je jednostavnosti, a analitičaru koji treba sve detalje ostaju puni izvještaji.</p>
     </div>
   </section>
 
-  <!-- KONCEPT -->
-  <section class="block tinted" id="koncept" aria-labelledby="koncept-h">
+  <!-- PROTOTIP -->
+  <section class="block tinted" id="prototip" aria-labelledby="prototip-h">
     <div class="wrap">
       <div class="head">
-        <div><span class="eyebrow">Koncept</span><h2 id="koncept-h">Jutarnji izvještaj koji sam čita brojke</h2></div>
-        <p>Hoteli obično imaju dnevni izvještaj za managera: sažetak soba, prihoda i rezervacija u odnosu na isti dan lani. Pretpostavljam da se koristi ujutro kao priprema za dan: kako smo stajali jučer u odnosu na lani, što nas čeka danas i koji rizici i prilike dolaze u idućim danima. Brojke su tu, ali tumačenje je na manageru. Moj prijedlog dodaje razinu iznad.</p>
+        <div><span class="eyebrow">Koncept i prototip</span><h2 id="prototip-h">Jutarnji izvještaj koji sam čita brojke</h2></div>
+        <p>Hoteli obično imaju dnevni izvještaj za managera: sažetak soba, prihoda i rezervacija u odnosu na isti dan lani. Brojke su tu, ali tumačenje je na manageru. Moj prijedlog zadržava te brojke i dodaje razinu iznad: ocjenu, posljedicu i sljedeći korak. Odaberi scenarij i prijeđi mišem preko dijelova ekrana.</p>
       </div>
-      <div class="levels">
-        <div><span class="lbl" style="color:var(--muted)">Detaljni izvještaji</span><h4>Svaka brojka</h4><p>Za analizu. Ostaju kakvi jesu.</p></div>
-        <div><span class="lbl" style="color:var(--muted)">Klasični jutarnji izvještaj</span><h4>Ključne brojke</h4><p>Tumačenje je na manageru.</p></div>
-        <div><span class="lbl">Moj prijedlog</span><h4>Brojke i zaključak</h4><p>Po važnosti, s ocjenom, posljedicom i korakom.</p></div>
+      <div class="pgrid">
+        <div class="stage" id="stage">
+          <iframe id="proto" src="prototip/index.html?static=1" title="Prikaz jutarnjeg izvještaja s objašnjenjima" tabindex="-1"></iframe>
+          <div class="tip" id="tip" role="tooltip" hidden></div>
+        </div>
+        <aside class="pside" aria-label="Scenariji prototipa">
+          <h4>Scenarij</h4>
+          <div class="scn" role="group" aria-label="Scenarij">
+            <button data-scn="bad" aria-pressed="false"><i class="sw" style="background:var(--bad)"></i><span><strong>Alarmantan dan</strong><em>Četiri stavke traže reakciju</em></span></button>
+            <button data-scn="normal" aria-pressed="true"><i class="sw" style="background:var(--warn)"></i><span><strong>Uobičajen dan</strong><em>Jedna prilika za višu cijenu</em></span></button>
+            <button data-scn="good" aria-pressed="false"><i class="sw" style="background:var(--ok)"></i><span><strong>Sve u redu</strong><em>Ništa ne traži reakciju</em></span></button>
+          </div>
+          <p class="hint">Prijeđi mišem preko dijelova ekrana za kratko objašnjenje.</p>
+          <a class="btn btn-primary" href="prototip/index.html" target="_blank" rel="noopener">Isprobaj prototip</a>
+        </aside>
       </div>
 
       <div class="sub-h"><h3>Hijerarhija ekrana</h3><p>Od odgovora prema detaljima.</p></div>
       <ol class="hier">
-        <li><h4>Tri glavna widgeta</h4><p>Ako Marija pogleda samo njih, mora joj biti jasno kako stvari stoje: jučer, danas i idućih 14 dana, svaki s ocjenom.</p></li>
-        <li><h4>Traži tvoju pažnju</h4><p>Tumačenje i sljedeći korak: što odstupa, koliko to vrijedi i što napraviti. Prvo današnji dan i gosti, zatim rizik za prihod, pa prilike.</p></li>
-        <li><h4>Brojke</h4><p>Podaci na kojima se temelje widgeti i stavke, za one koji žele sami provjeriti i protumačiti. I dalje uz jasan signal je li stanje u redu.</p></li>
-        <li><h4>Prognoza</h4><p>Idućih 7, 14 ili 30 dana u odnosu na lani, s detaljima po danu.</p></li>
-        <li><h4>Detaljni izvještaji</h4><p>Uvijek dostupni jednim klikom iz zaglavlja, za dubinsku analizu.</p></li>
+        <li><h4>Tri glavna widgeta</h4><p>Jučer, danas i idućih 14 dana, svaki s ocjenom. Ako Marija pogleda samo njih, mora joj biti jasno kako stvari stoje.</p></li>
+        <li><h4>Traži tvoju pažnju</h4><p>Što odstupa, koliko to vrijedi i što napraviti. Prvo današnji dan i gosti, zatim rizik za prihod, pa prilike.</p></li>
+        <li><h4>Brojke</h4><p>Podloga za sve iznad, za one koji žele sami provjeriti, i dalje uz jasan signal je li stanje u redu.</p></li>
+        <li><h4>Prognoza</h4><p>Idućih 7, 14 ili 30 dana u odnosu na lani. Tu Marija još može utjecati na rezultat.</p></li>
+        <li><h4>Detaljni izvještaji</h4><p>Uvijek dostupni jednim klikom iz zaglavlja.</p></li>
       </ol>
 
-      <div class="sub-h"><h3>Kako nastaju stavke</h3><p>Svaka stavka nastaje iz jednostavnog pravila i ima isti predložak, pa se mijenjaju samo brojke. Pravila se računaju jednom noću iz rezervacija i povijesti za usporedbu s lani. Pragove bih odredila iz podataka, relativno i prilagođeno objektu, a stavke se prikazuju redom: prvo današnji dan i gosti, zatim rizik za prihod, pa prilike.</p></div>
+      <div class="sub-h"><h3>Kako bi developeri pripremili stavke</h3><p>Svaka stavka nastaje iz jednostavnog pravila i ima isti predložak, pa se mijenjaju samo brojke. Pravila se računaju jednom noću iz rezervacija i povijesti za usporedbu s lani, a pragove bih odredila iz podataka, relativno i prilagođeno objektu. Pravila, a ne AI, jer kod poslovnih brojki jedna netočna rečenica ruši povjerenje.</p></div>
       <div class="rule-ex">
         <div class="card">
           <span class="lbl">Primjer pravila</span>
@@ -510,48 +525,22 @@
           </dl>
         </div>
         <div class="card">
-          <span class="lbl">Ostale ideje za pravila</span>
+          <span class="lbl">Ideje za pravila</span>
           <ul class="ideas">
             <li><span class="chip warn">Danas</span> Neobično puno dolazaka ili odlazaka</li>
+            <li><span class="chip warn">Danas</span> Dolasci bez plaćenog depozita</li>
+            <li><span class="chip bad">Rizik za prihod</span> Idući dani zaostaju za lani</li>
             <li><span class="chip bad">Rizik za prihod</span> Više otkazivanja nego obično</li>
-            <li><span class="chip bad">Rizik za prihod</span> Nekoliko dana zaredom slabije nego lani</li>
-            <li><span class="chip warn">Danas</span> Dolasci bez plaćenog depozita ili garancije</li>
-            <li><span class="chip warn">Danas</span> Sobe izvan upotrebe na dan kad je hotel gotovo pun</li>
-            <li><span class="chip bad">Rizik za prihod</span> Nove rezervacije za idući mjesec stižu sporije nego lani</li>
-            <li><span class="chip bad">Rizik za prihod</span> Udio izravnih rezervacija pada u korist posrednika</li>
             <li><span class="chip opp">Prilika</span> Datum je gotovo pun, a cijena je niža nego lani</li>
-            <li><span class="chip opp">Prilika</span> Slab dan između dva jaka, npr. za ponudu ili minimalni boravak</li>
-            <li><span class="chip opp">Prilika</span> Jedan tip sobe se rasprodaje brže od ostalih</li>
           </ul>
           <p class="small muted" style="margin:14px 0 0">Koja pravila i s kojim pragovima, odlučila bih nakon razgovora s managerima.</p>
         </div>
-      </div>
-      <div class="card" style="margin-top:20px"><h4>Zašto pravila, a ne odmah AI</h4><p>Kod poslovnih brojki jedna netočna rečenica ruši povjerenje. Pravila su predvidljiva i mjerljiva, a AI može kasnije pomoći s formulacijom, iz već izračunatih brojki.</p></div>
-    </div>
-  </section>
-
-  <!-- SCOPE -->
-  <section class="block" id="scope" aria-labelledby="scope-h">
-    <div class="wrap">
-      <div class="head">
-        <div><span class="eyebrow">Scope</span><h2 id="scope-h">Što ide prvo, a što čeka</h2></div>
-        <p>MVP koristi samo podatke koji već postoje. Mobilni prikaz i pragovi prilagođeni objektu su u MVP-u, jer bez njih izvještaj ne bi radio za dio korisnika.</p>
-      </div>
-      <div class="grid g3">
-        <div class="card scope-col"><h3>Jutarnji izvještaj <span class="pill mvp">MVP</span></h3><ul><li>Tri widgeta s ocjenom</li><li>Nekoliko pravila s pragovima prilagođenima objektu</li><li>Brojke u odnosu na lani</li><li>Prognoza na 7, 14 i 30 dana</li><li>Mobilni prikaz</li></ul></div>
-        <div class="card scope-col"><h3>Dolazi k tebi <span class="pill">Faza 2</span></h3><ul><li>Email u 7:00</li><li>Dijeljenje s timom</li><li>Obavijest kad se pojavi važna stavka</li></ul></div>
-        <div class="card scope-col"><h3>Svjesno čeka <span class="pill">Kasnije</span></h3><ul><li>Manager sam podešava pragove</li><li>AI formulacija i pitanja</li><li>Ostali izvještaji</li></ul></div>
-      </div>
-      <div class="grid g3 decisions" style="margin-top:20px">
-        <div class="card"><h4>Trade-off: odgovor ispred tablice</h4><p>Na prvi pogled manje brojki, ali odmah jasan zaključak. Sve brojke su jedan korak niže.</p></div>
-        <div class="card no"><h4>Ne radim: AI ne odlučuje što je važno</h4><p>Pravila određuju sadržaj. AI eventualno kasnije pomaže s formulacijom.</p></div>
-        <div class="card"><h4>Poveznice umjesto akcija</h4><p>Stavke vode na postojeće dijelove sustava. Ovo je izvještaj, a ne alat za zadatke.</p></div>
       </div>
     </div>
   </section>
 
   <!-- METRIKE -->
-  <section class="block tinted" id="metrike" aria-labelledby="metrike-h">
+  <section class="block" id="metrike" aria-labelledby="metrike-h">
     <div class="wrap">
       <div class="head">
         <div><span class="eyebrow">Metrike</span><h2 id="metrike-h">Kako znam da radi</h2></div>
@@ -569,28 +558,22 @@
     </div>
   </section>
 
-  <!-- PROTOTIP -->
-  <section class="block" id="prototip" aria-labelledby="prototip-h">
+  <!-- SCOPE -->
+  <section class="block tinted" id="scope" aria-labelledby="scope-h">
     <div class="wrap">
       <div class="head">
-        <div><span class="eyebrow">Prototip</span><h2 id="prototip-h">Jutarnji izvještaj, dio po dio</h2></div>
-        <p>Hotel s 50 soba i izmišljeni podaci. Odaberi scenarij i prijeđi mišem preko dijelova ekrana za kratko objašnjenje. Za klikanje otvori klikabilni prototip.</p>
+        <div><span class="eyebrow">Scope</span><h2 id="scope-h">Što ide prvo, a što čeka</h2></div>
+        <p>MVP koristi samo podatke koji već postoje. Mobilni prikaz i pragovi prilagođeni objektu su u MVP-u, jer bez njih izvještaj ne bi radio za dio korisnika.</p>
       </div>
-      <div class="pgrid">
-        <div class="stage" id="stage">
-          <iframe id="proto" src="prototip/index.html?static=1" title="Prikaz jutarnjeg izvještaja s objašnjenjima" tabindex="-1"></iframe>
-          <div class="tip" id="tip" role="tooltip" hidden></div>
-        </div>
-        <aside class="pside" aria-label="Scenariji prototipa">
-          <h4>Scenarij</h4>
-          <div class="scn" role="group" aria-label="Scenarij">
-            <button data-scn="bad" aria-pressed="false"><i class="sw" style="background:var(--bad)"></i><span><strong>Alarmantan dan</strong><em>Četiri stavke traže reakciju</em></span></button>
-            <button data-scn="normal" aria-pressed="true"><i class="sw" style="background:var(--warn)"></i><span><strong>Uobičajen dan</strong><em>Jedna prilika za višu cijenu</em></span></button>
-            <button data-scn="good" aria-pressed="false"><i class="sw" style="background:var(--ok)"></i><span><strong>Sve u redu</strong><em>Ništa ne traži reakciju</em></span></button>
-          </div>
-          <p class="hint">Prijeđi mišem preko dijelova ekrana za kratko objašnjenje.</p>
-          <a class="btn btn-primary" href="prototip/index.html" target="_blank" rel="noopener">Isprobaj prototip</a>
-        </aside>
+      <div class="grid g3">
+        <div class="card scope-col"><h3>Jutarnji izvještaj <span class="pill mvp">MVP</span></h3><ul><li>Tri widgeta s ocjenom</li><li>Nekoliko pravila s pragovima prilagođenima objektu</li><li>Brojke u odnosu na lani</li><li>Prognoza na 7, 14 i 30 dana</li><li>Mobilni prikaz</li></ul></div>
+        <div class="card scope-col"><h3>Dolazi k tebi <span class="pill">Faza 2</span></h3><ul><li>Email u 7:00</li><li>Dijeljenje s timom</li><li>Obavijest kad se pojavi važna stavka</li></ul></div>
+        <div class="card scope-col"><h3>Svjesno čeka <span class="pill">Kasnije</span></h3><ul><li>Manager sam podešava pragove</li><li>AI formulacija i pitanja</li><li>Ostali izvještaji</li></ul></div>
+      </div>
+      <div class="grid g3 decisions" style="margin-top:20px">
+        <div class="card"><h4>Trade-off: odgovor ispred tablice</h4><p>Na prvi pogled manje brojki, ali odmah jasan zaključak. Sve brojke su jedan korak niže.</p></div>
+        <div class="card no"><h4>Ne radim: AI ne odlučuje što je važno</h4><p>Pravila određuju sadržaj. AI eventualno kasnije pomaže s formulacijom.</p></div>
+        <div class="card"><h4>Poveznice umjesto akcija</h4><p>Stavke vode na postojeće dijelove sustava. Ovo je izvještaj, a ne alat za zadatke.</p></div>
       </div>
     </div>
   </section>
